@@ -18,7 +18,7 @@ class athlete:
         return 0
     def update():
         return 0
-    
+
 class status:
     def __init__(self, id, statustext):
         self.id = id
