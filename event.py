@@ -2,15 +2,15 @@ import sqlclass as sqlting
 
 class event:
     def __init__(self, id, competitionid, registrationid, eventnumber, eventname, distance, gender, maxage, qualifyingtime, relay):
-        self.id = id,
-        self.competitionid = competitionid,
-        self.registrationid = registrationid,
-        self.eventnumber = eventnumber,
-        self.eventname = eventname,
-        self.distance = distance,
-        self.gender = gender,
-        self.maxage = maxage,
-        self.qualifyingtime = qualifyingtime,
+        self.id = id
+        self.competitionid = competitionid
+        self.registrationid = registrationid
+        self.eventnumber = eventnumber
+        self.eventname = eventname
+        self.distance = distance
+        self.gender = gender
+        self.maxage = maxage
+        self.qualifyingtime = qualifyingtime
         self.relay = relay
     
     def save():
