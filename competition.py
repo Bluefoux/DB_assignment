@@ -1,4 +1,4 @@
-import sqlclass as sqlting
+from sqlclass import sqlting
 
 
 class competition:
@@ -17,8 +17,12 @@ class competition:
         self.eventlist = eventlist
     
     def getcompetition():
-        mydb = sqlting.connect()
-        cursor = sqlting.createcursor()
+        sqlclass = sqlting()
+        mydb = sqlclass.mydb
+        mycursor = sqlclass.createcursor()
+        mycursor.execute("SELECT * FROM competition")
+        mycompetitions = mycursor.fetchall()
+        return mycompetitions
     
     def printstartlist():
         return 0

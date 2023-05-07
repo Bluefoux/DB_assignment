@@ -1,4 +1,5 @@
-import sqlclass as sqlting
+from sqlclass import sqlting
+import mysql.connector
 
 class event:
     def __init__(self, id, competitionid, registrationid, eventnumber, eventname, distance, gender, maxage, qualifyingtime, relay):
@@ -14,7 +15,12 @@ class event:
         self.relay = relay
     
     def save():
-        return 0
+        mysqlclass = sqlting()
+        mydb = mysqlclass.connect()
+        mycursor = mysqlclass.createcursor()
+        querry = "INSERT INTO EVENT (CompetitionID, RegistrationID, EventNumber, EventName, Dinstance, Gender, MagAge, QualifyingTime, Relay)"
+        values = (event.competitionid, event.registrationid, event.eventnumber, event.eventname, event.distance, event.gender, event.maxage, event.qualifyingtime, event.relay)
+        return  #add execution of querry
     
     def delete():
         return 0

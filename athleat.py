@@ -1,4 +1,5 @@
-import sqlclass as sqlting
+#import sqlclass as sqlting
+from sqlclass import sqlting
 
 class athlete:
     def __init__(self, id, statusid, eventid, name, lastname, teamname, age, registrationtime, resulttime):

@@ -1,3 +1,4 @@
+from sqlclass import sqlting
 
 class registration:
     def __init__(self, id, competitionid, eventnumber, name, lastname, teamname, age, registrationtime):

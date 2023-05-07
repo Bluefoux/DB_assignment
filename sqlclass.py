@@ -2,25 +2,32 @@ import mysql.connector
 
 class sqlting:
 
-    def __init__(self, host, user, password, database):
-        self.host = host
-        self.user = user
-        self.password = password
-        self.database = database
-
+    def __init__(self, mydb, mycursor):
+        self.mydb = mydb
+        self.mycursor = mycursor
+    
     def connect():
-        mydb = mysql.connector.connect(
-            host="127.0.0.1",
-            user="root",
-            password="fille2001",
-            database="mydb"
-        )
-        return mydb
+        try:
+            sqlting.mydb = mysql.connector.connect(
+                host="127.0.0.1",
+                user="root",
+                password="fille2001",
+                database="mydb"
+            )
+            return 1
+        except:
+            print("Could not connect to database")
+            return 0
     
     def createcursor():
-        mycursor = mydb.cursor(dictionary=True)
-        return mycursor
-    
+        try:
+            sqlting.mycursor = sqlting.mydb.cursor(dictionary=True)
+            return 1
+        except:
+            print("Could not create cursor")
+            return 0
+
+""" 
 mydb = mysql.connector.connect(
     host="127.0.0.1",
     user="root",
@@ -46,3 +53,4 @@ print(mycursor.rowcount, "record inserted.")
 mycursor.execute("SHOW TABLES")
 for x in mycursor:
     print(x)
+"""
