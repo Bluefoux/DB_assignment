@@ -34,4 +34,5 @@ class registration:
         """mysql> LOAD DATA LOCAL INFILE '/path/pet.txt' INTO TABLE pet
         LINES TERMINATED BY '\r\n';
         """
+        
         return 0
