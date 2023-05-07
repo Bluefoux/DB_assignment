@@ -11,18 +11,18 @@ class registration:
         self.age = age
         self.registrationtime = registrationtime
     
-    def save(mycursor, mydb):
-        if(registration.id == 0):
-            query = "INSERT INTO REGISTRATIONS (EventNumber, Name, LastName, Team, Age, RegistrationTime)"
-            values = (registration.eventnumber, registration.name, registration.lastname, registration.teamname, registration.age, registration.registrationtime)
+    def save(self, mycursor, mydb):
+        if(self.id == 0):
+            query = "INSERT INTO REGISTRATIONS (CompetitionID, EventNumber, Name, LastName, Team, Age, RegistrationTime)"
+            values = (self.competitionid, self.eventnumber, self.name, self.lastname, self.teamname, self.age, self.registrationtime)
             mycursor.execute(query, values)
             mydb.commit()
-            registration.id = mycursor.lastrowid
-            return registration.id
+            self.id = mycursor.lastrowid
+            return self.id
         else:
             print("Registration already exists, update instead")
-            query = "UPDATE REGISTRATIONS SET EventNumber = %s, Name = %s, LastName = %s, Team = %s, Age = %s, RegistrationTime = %s WHERE ID = %s"
-            values = (registration.eventnumber, registration.name, registration.lastname, registration.teamname, registration.age, registration.registrationtime, registration.id)
+            query = "UPDATE REGISTRATIONS SET CompetitionID = %s, EventNumber = %s, Name = %s, LastName = %s, Team = %s, Age = %s, RegistrationTime = %s WHERE ID = %s"
+            values = (self.competitionid, self.eventnumber, self.name, self.lastname, self.teamname, self.age, self.registrationtime, self.id)
             mycursor.execute(query, values)
             mydb.commit()
             return 0

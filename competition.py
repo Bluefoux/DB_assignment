@@ -2,7 +2,7 @@ from sqlclass import sqlting
 
 
 class competition:
-    def __init__(self, id, name, StartDate, Enddate, CompetitionVenue, Organizer, NumberOfLanes, Length, IndividualStartFee, RelayStartFee, Description, eventlist):
+    def __init__(self=None, id=None, name=None, StartDate=None, Enddate=None, CompetitionVenue=None, Organizer=None, NumberOfLanes=None, Length=None, IndividualStartFee=None, RelayStartFee=None, Description=None, eventlist=None):
         self.id = id
         self.name = name
         self.StartDate = StartDate
@@ -40,18 +40,18 @@ class competition:
     def printinvoice():
         return 0
     
-    def delete(mycursor, mydb):
+    def delete(self, mycursor, mydb):
         if(id == 0):
             print("Competition does not exist")
             return 0
         else:
-            competition.deleteallatachments(mycursor, mydb)
+            self.deleteallatachments(mycursor, mydb)
             query = "DELETE FROM competition WHERE ID = %s"
-            values = (competition.id)
+            values = (self.id)
             try:
                 mycursor.execute(query, values)
                 mydb.commit()
-                competition.id = 0
+                self.id = 0
                 return 1
             except:
                 print("Could not delete competition")
@@ -66,29 +66,29 @@ class competition:
 
     #def deleteevent(eventid, mycursor, mydb):
 
-    def save(mycursor, mydb):
-        if(competition.id == 0):
+    def save(self, mycursor, mydb):
+        if(self.id == 0):
             query = "INSERT INTO COMPETITION (Name, StartDate, EndDate, CompetitionVenue, Organizer, NumberOfLanes, Length, IndividualStartFee, RelayStartFee, Description)"
-            values = (competition.name, competition.StartDate, competition.Enddate, competition.CompetitionVenue, competition.Organizer, competition.NumberOfLanes, competition.Length, competition.IndividualStartFee, competition.RelayStartFee, competition.Description)
+            values = (self.name, self.StartDate, self.Enddate, self.CompetitionVenue, self.Organizer, self.NumberOfLanes, self.Length, self.IndividualStartFee, self.RelayStartFee, self.Description)
             mycursor.execute(query, values)
             mydb.commit()
-            competition.id = mycursor.lastrowid
-            return competition.id
+            self.id = mycursor.lastrowid
+            return self.id
         else:
             print("Competition already exists, update instead")
             query = "UPDATE COMPETITION SET Name = %s, StartDate = %s, EndDate = %s, CompetitionVenue = %s, Organizer = %s, NumberOfLanes = %s, Length = %s, IndividualStartFee = %s, RelayStartFee = %s, Description = %s WHERE ID = %s"
-            values = (competition.name, competition.StartDate, competition.Enddate, competition.CompetitionVenue, competition.Organizer, competition.NumberOfLanes, competition.Length, competition.IndividualStartFee, competition.RelayStartFee, competition.Description, competition.id)
+            values = (self.name, self.StartDate, self.Enddate, self.CompetitionVenue, self.Organizer, self.NumberOfLanes, self.Length, self.IndividualStartFee, self.RelayStartFee, self.Description, self.id)
             mycursor.execute(query, values)
             mydb.commit()
             return 0
     
-    def getevents(mycursor):
+    def getevents(self, mycursor):
         query = "SELECT * FROM event WHERE CompetitionID = %s"
-        values = (competition.id)
+        values = (self.id)
         try:
             mycursor.execute(query, values)
-            competition.eventlist = mycursor.fetchall()
-            return competition.eventlist
+            self.eventlist = mycursor.fetchall()
+            return self.eventlist
         except:
             print("No events found")
             return 0

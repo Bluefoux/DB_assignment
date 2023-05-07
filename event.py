@@ -14,18 +14,18 @@ class event:
         self.qualifyingtime = qualifyingtime
         self.relay = relay
         
-    def save(mycursor, mydb):
-        if(event.id == 0):
-            query = "INSERT INTO EVENT (CompetitionID, RegistrationID, EventNumber, EventName, Dinstance, Gender, MaxAge, QualifyingTime, Relay)"
-            values = (event.competitionid, event.registrationid, event.eventnumber, event.eventname, event.distance, event.gender, event.maxage, event.qualifyingtime, event.relay)
+    def save(self, mycursor, mydb):
+        if(self.id == 0):
+            query = "INSERT INTO EVENT (CompetitionID, RegistrationID, EventNumber, EventName, Distance, Gender, MaxAge, QualifyingTime, Relay)"
+            values = (self.competitionid, self.registrationid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay)
             mycursor.execute(query, values)
             mydb.commit()
-            event.id = mycursor.lastrowid
-            return event.id
+            self.id = mycursor.lastrowid
+            return self.id
         else:
             print("Event already exists, update instead")
-            query = "UPDATE EVENT SET CompetitionID = %s, RegistrationID = %s, EventNumber = %s, EventName = %s, Dinstance = %s, Gender = %s, MaxAge = %s, QualifyingTime = %s, Relay = %s WHERE ID = %s"
-            values = (event.competitionid, event.registrationid, event.eventnumber, event.eventname, event.distance, event.gender, event.maxage, event.qualifyingtime, event.relay, event.id)
+            query = "UPDATE EVENT SET CompetitionID = %s, RegistrationID = %s, EventNumber = %s, EventName = %s, Distance = %s, Gender = %s, MaxAge = %s, QualifyingTime = %s, Relay = %s WHERE ID = %s"
+            values = (self.competitionid, self.registrationid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay, self.id)
             mycursor.execute(query, values)
             mydb.commit()
             return 0

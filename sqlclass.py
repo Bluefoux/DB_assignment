@@ -6,9 +6,9 @@ class sqlting:
         self.mydb = mydb
         self.mycursor = mycursor
     
-    def connect():
+    def connect(self):
         try:
-            sqlting.mydb = mysql.connector.connect(
+            self.mydb = mysql.connector.connect(
                 host="127.0.0.1",
                 user="root",
                 password="fille2001",
@@ -19,9 +19,9 @@ class sqlting:
             print("Could not connect to database")
             return 0
     
-    def createcursor():
+    def createcursor(self):
         try:
-            sqlting.mycursor = sqlting.mydb.cursor(dictionary=True)
+            self.mycursor = self.mydb.cursor(dictionary=True)
             return 1
         except:
             print("Could not create cursor")
