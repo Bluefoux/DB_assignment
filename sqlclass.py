@@ -2,7 +2,7 @@ import mysql.connector
 
 class sqlting:
 
-    def __init__(self, mydb, mycursor):
+    def __init__(self=None, mydb=None, mycursor=None):
         self.mydb = mydb
         self.mycursor = mycursor
     
@@ -26,6 +26,19 @@ class sqlting:
         except:
             print("Could not create cursor")
             return 0
+
+
+if __name__ == '__main__':
+    ting = sqlting()
+    con = ting.connect()
+    mycursor = ting.createcursor()
+    ting.mycursor.execute("LOAD DATA LOCAL INFILE 'E:/Uppgifter/Databas/Competitions.txt' INTO TABLE COMPETITION LINES TERMINATED BY '\r\n'")
+    ting.mydb.commit()
+    ting.mydb.close()
+
+"""
+        LOAD DATA LOCAL INFILE 'E:/Uppgifter/Databas/Competitions.txt' INTO TABLE COMPETITION LINES TERMINATED BY '\r\n';
+"""
 
 """ 
 mydb = mysql.connector.connect(

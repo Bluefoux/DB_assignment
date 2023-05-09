@@ -1,7 +1,7 @@
 from sqlclass import sqlting
 
 class registration:
-    def __init__(self, id, competitionid, eventnumber, name, lastname, teamname, age, registrationtime):
+    def __init__(self, id=None, competitionid=None, eventnumber=None, name=None, lastname=None, teamname=None, age=None, registrationtime=None):
         self.id = id
         self.competitionid = competitionid
         self.eventnumber = eventnumber
@@ -31,8 +31,8 @@ class registration:
         return 0
     
     def importregistrationfile():
-        """mysql> LOAD DATA LOCAL INFILE '/path/pet.txt' INTO TABLE pet
-        LINES TERMINATED BY '\r\n';
         """
-        
+        LOAD DATA LOCAL INFILE 'E:/Uppgifter/Databas/Competitions.txt' INTO TABLE COMPETITION LINES TERMINATED BY '\r\n';
+        """
         return 0
+    
