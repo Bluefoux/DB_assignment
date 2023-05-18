@@ -1,3 +1,11 @@
+#skapa gui
+
+#skriv klart funktioner
+
+#procedur för heatindelning
+#börja göra select, hårdkoda competitionid och eventid
+#gör sortering på registrationtime
+
 from sqlclass import sqlting
 import mysql.connector
 
