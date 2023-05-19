@@ -38,9 +38,9 @@ class event:
             mydb.commit()
             return 0
     
-    def delete(self, mycursor, mydb, delname, compid):
-        query = "DELETE FROM EVENT WHERE NAME = %s, CompetitionID = %d"
-        value = (delname, compid)
+    def delete(self, mycursor, mydb):
+        query = "DELETE FROM EVENT WHERE CompetitionID = %s, ID = %d"
+        value = (self.competitionid, self.id)
         mycursor.execute(query, value)
         mydb.commit()
         return 0

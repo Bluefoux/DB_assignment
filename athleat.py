@@ -30,7 +30,11 @@ class athlete:
             mydb.commit()
             return 0
     
-    def delete():
+    def delete(self, mycursor, mydb):
+        query = "DELETE FROM ATHLEATS WHERE ID = %d"
+        value = (self.id)
+        mycursor.execute(query, value)
+        mydb.commit()
         return 0
 
 class status:

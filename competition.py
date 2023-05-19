@@ -41,11 +41,10 @@ class competition:
         return 0
     
     def delete(self, mycursor, mydb):
-        if(id == 0):
+        if(self.id == 0):
             print("Competition does not exist")
             return 0
         else:
-            self.deleteallatachments(mycursor, mydb)
             query = "DELETE FROM competition WHERE ID = %s"
             values = (self.id)
             try:
@@ -56,15 +55,6 @@ class competition:
             except:
                 print("Could not delete competition")
                 return 0
-    
-    
-    def deleteallattachments(mycursor, mydb):
-        #query = "DELETE FROM REGISTRATION WHERE CompetitionID = %s"
-        #querry = "DELETE FROM event WHERE CompetitionID = %s"
-        #values = (competition.id)
-        return 0
-
-    #def deleteevent(eventid, mycursor, mydb):
 
     def save(self, mycursor, mydb):
         if(self.id == 0):
