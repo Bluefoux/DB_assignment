@@ -6,8 +6,8 @@
 #börja göra select, hårdkoda competitionid och eventid
 #gör sortering på registrationtime
 
-from sqlclass import sqlting
 import mysql.connector
+from sqlclass import sqlting
 
 class event:
     def __init__(self, id, competitionid, registrationid, eventnumber, eventname, distance, gender, maxage, qualifyingtime, relay):
@@ -38,7 +38,11 @@ class event:
             mydb.commit()
             return 0
     
-    def delete():
+    def delete(self, mycursor, mydb, delname, compid):
+        query = "DELETE FROM EVENT WHERE NAME = %s, CompetitionID = %d"
+        value = (delname, compid)
+        mycursor.execute(query, value)
+        mydb.commit()
         return 0
     
     def getathleats():
