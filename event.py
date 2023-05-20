@@ -51,12 +51,21 @@ class event:
     def generateheatlist():
         return 0
     
-    def printheatlist():
-        return 0
-
-    def printstartlist():
+    def printstartlist(self):
+        if(self.id == 0):
+            print("event does not exist")
+        
         return 0
     
-    def printresultlist():
+    def printheatlist(self):
+        if(self.id == 0):
+            print("event does not exist") 
+        
+        return 0
+
+    def printresultlist(self):
+        if(self.id == 0):
+            print("event does not exist") 
+        
         return 0
     

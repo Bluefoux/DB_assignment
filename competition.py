@@ -28,16 +28,7 @@ class competition:
             print("No competition with that name found")
             return 0
     
-    def printstartlist():
-        return 0
-    
-    def printheatlist():
-        return 0
-
-    def printresultlist():
-        return 0
-    
-    def printinvoice():
+    def printinvoice(slef):
         return 0
     
     def delete(self, mycursor, mydb):
