@@ -28,7 +28,17 @@ class competition:
             print("No competition with that name found")
             return 0
     
-    def printinvoice(slef):
+    def printinvoice(self, mycursor, mydb):
+        query = "CALL SP_GetInvoice(%s)"
+        values = (self.id)
+        try:
+            mycursor.execute(query, values)
+            invoice = mycursor.fetchall()
+            for x in invoice:
+                print(invoice)
+            return invoice
+        except:
+            print("No competition with that name found")
         return 0
     
     def delete(self, mycursor, mydb):
