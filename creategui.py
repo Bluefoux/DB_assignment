@@ -7,7 +7,7 @@ Add new competition button do stuff
 Edit competition 
 Add delete competition button
 program knapp
-
+Lägg till scroll ting för competitions
 """
 
 def Create_comp_button_clicked():
