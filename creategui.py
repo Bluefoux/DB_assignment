@@ -43,9 +43,7 @@ def myui():
                     e = tk.Label(wind, width=20, fg='blue', text = x[key], relief="ridge", anchor="w")
                     e.grid(row=i, column=y)
                 y += 1
-            #e.insert(END, x[y])
         i += 1
-            #print(x)
     sqlclassobj.mycursor.close()
     sqlclassobj.mydb.close()
     wind.mainloop()
