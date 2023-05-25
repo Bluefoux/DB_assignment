@@ -28,41 +28,21 @@ CLOSE CurRegistration;
 End;
 ;;
 
--- Store procedure get invoice (dosnt work)
+-- Store procedure get invoice (kinda work)
 DROP PROCEDURE IF EXISTS SP_GetInvoice;
 DELIMITER ;;
 CREATE PROCEDURE SP_GetInvoice(compid INT)
 BEGIN
 DECLARE sum_invoice INT DEFAULT 0;
-SET sum_invoice = (SELECT EVENT.CompetitionID, COUNT(ATHLEATS.ID), ATHLEATS.TeamName, 100*COUNT(ATHLEATS.ID) AS Invoice
+SELECT 100*COUNT(ATHLEATS.ID) AS Invoice
 	FROM ATHLEATS
 	INNER JOIN EVENT
 	ON ATHLEATS.EventID = EVENT.ID
 	WHERE EVENT.CompetitionID = compid
 	GROUP BY EVENT.CompetitionID, ATHLEATS.TeamName
-	ORDER BY EVENT.CompetitionID, ATHLEATS.TeamName);
-SELECT sum_invoice;
+	ORDER BY EVENT.CompetitionID, ATHLEATS.TeamName;
 End;
 ;;
-
--- Store procedure get invoice (THIS IS A COPY) (dosnt work)
-DROP PROCEDURE IF EXISTS SP_GetInvoice;
-DELIMITER ;;
-CREATE PROCEDURE SP_GetInvoice(compid INT)
-BEGIN
-DECLARE sum_invoice INT DEFAULT 0;
-SET sum_invoice = SUM((SELECT 100*COUNT(ATHLEATS.ID) AS Invoice
-	FROM ATHLEATS
-	INNER JOIN EVENT
-	ON ATHLEATS.EventID = EVENT.ID
-	WHERE EVENT.CompetitionID = compid
-	GROUP BY EVENT.CompetitionID, ATHLEATS.TeamName
-	ORDER BY EVENT.CompetitionID, ATHLEATS.TeamName));
-SELECT sum_invoice AS sum_invoice;
-End;
-;;
-
-CALL SP_GetInvoice(6);
 
 -- Generate Start List
 DROP PROCEDURE IF EXISTS Generate_StartList;
@@ -70,17 +50,62 @@ DELIMITER ;;
 CREATE PROCEDURE Generate_StartList(compid INT, eventid INT)
 BEGIN
 DECLARE sum_invoice INT DEFAULT 0;
-SET sum_invoice = (SELECT SUM((SELECT 100*COUNT(ATHLEATS.ID) AS Invoice
+SELECT Name, Lastname, TeamName, RegistrationTime
 	FROM ATHLEATS
-	INNER JOIN EVENT
-	ON ATHLEATS.EventID = EVENT.ID
-	WHERE EVENT.CompetitionID = compid
-	GROUP BY EVENT.CompetitionID, ATHLEATS.TeamName
-	ORDER BY EVENT.CompetitionID, ATHLEATS.TeamName)));
-SELECT sum_invoice;
+    INNER JOIN EVENT
+	ON ATHLEATS.EventID = EVENT.ID AND EVENT.CompetitionID = compid AND ATHLEATS.EventID = eventid
+	ORDER BY RegistrationTime ASC;
 End;
 ;;
 
+DROP PROCEDURE IF EXISTS Generate_Heatlist;
+DELIMITER ;;
+CREATE PROCEDURE Generate_Heatlist(compid INT, evid INT)
+BEGIN
+DECLARE num_of_athleats INT DEFAULT 0;
+DECLARE num_of_lanes INT DEFAULT 0;
+DECLARE num_of_heats INT DEFAULT 0;
+DECLARE athleatID INT DEFAULT 0;
+DECLARE current_heat INT DEFAULT 0;
+DECLARE current_rank INT DEFAULT 0;
+DECLARE current_lane INT DEFAULT 0;
+DECLARE done INT DEFAULT FALSE;
+DECLARE Cursorathleats CURSOR FOR SELECT ID FROM ATHLEATS WHERE EventID = evid ORDER BY RegistrationTime ASC;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+SET num_of_athleats = (SELECT COUNT(ATHLEATS.ID) 
+FROM EVENT 
+INNER JOIN ATHLEATS
+ON EVENT.ID = ATHLEATS.EventID AND EVENT.CompetitionID = compid AND EVENT.ID = evid);
+SET num_of_lanes = (SELECT NumberOfLanes FROM COMPETITION WHERE ID = compid);
+SET num_of_heats = (SELECT CEILING(num_of_athleats / num_of_lanes));
+
+-- SELECT num_of_athleats, num_of_lanes, num_of_heats;
+
+OPEN Cursorathleats;
+heatloop: LOOP    
+    SET current_heat = (num_of_heats - (current_rank DIV num_of_lanes));
+    SET current_lane = 1 + MOD(current_rank, num_of_lanes);
+	FETCH Cursorathleats INTO athleatID;
+    IF done THEN
+		LEAVE heatloop;
+	END IF;
+    
+    UPDATE ATHLEATS
+    SET Heat = current_heat, Lane = current_lane 
+    WHERE ID = athleatID;
+    SET current_rank = current_rank+1;
+END LOOP;
+CLOSE Cursorathleats;
+End;
+;;
+
+-- DROP FUNCITON IF EXISTS FN_Calec_Lane;
+-- DELIMITER ;;
+-- CREATE FUNCITON FN_Calec_Lane(heatrank INT)
+-- RETURNS INT 
+
+-- SELECT MOD(num_of_lanes, num_of_athleats);
 -- delete event trigger (delete all athleats with eventid)
 DELIMITER ;;
 CREATE TRIGGER del_event BEFORE DELETE ON EVENT
@@ -104,7 +129,7 @@ END;
 
 SELECT * FROM REGISTRATIONS;
 SELECT * FROM EVENT;
-SELECT * FROM ATHLEATS;
+SELECT * FROM ATHLEATS WHERE EventID = 48 ORDER BY Heat, Lane;
 
 -- Test delete competition trigger
 DELETE FROM COMPETITION
@@ -131,6 +156,9 @@ WHERE ID = 4;
 
 -- call procedure
 CALL SP_ImportRegistration();
+CALL SP_GetInvoice(6);
+CALL Generate_StartList(6, 48);
+CALL Generate_Heatlist(6, 48);
 
 -- Select to check table
 SELECT * FROM ATHLEATS;
