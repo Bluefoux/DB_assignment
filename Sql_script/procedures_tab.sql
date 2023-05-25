@@ -85,7 +85,8 @@ SET num_of_heats = (SELECT CEILING(num_of_athleats / num_of_lanes));
 OPEN Cursorathleats;
 heatloop: LOOP    
     SET current_heat = (num_of_heats - (current_rank DIV num_of_lanes));
-    SET current_lane = 1 + MOD(current_rank, num_of_lanes);
+    -- SET current_lane = 1 + MOD(current_rank, num_of_lanes);
+    SET current_lane = FN_RankToLine(num_of_lanes, current_rank);
 	FETCH Cursorathleats INTO athleatID;
     IF done THEN
 		LEAVE heatloop;
