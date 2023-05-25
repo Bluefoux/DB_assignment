@@ -28,13 +28,13 @@ class sqlting:
             return 0
 
 
-if __name__ == '__main__':
-    ting = sqlting()
-    con = ting.connect()
-    mycursor = ting.createcursor()
-    ting.mycursor.execute("LOAD DATA LOCAL INFILE 'E:/Uppgifter/Databas/Competitions.txt' INTO TABLE COMPETITION LINES TERMINATED BY '\r\n'")
-    ting.mydb.commit()
-    ting.mydb.close()
+#if __name__ == '__main__':
+#    ting = sqlting()
+#    con = ting.connect()
+#    mycursor = ting.createcursor()
+ #   ting.mycursor.execute("LOAD DATA LOCAL INFILE 'E:/Uppgifter/Databas/Competitions.txt' INTO TABLE COMPETITION LINES TERMINATED BY '\r\n'")
+#    ting.mydb.commit()
+#    ting.mydb.close()
 
 """
         LOAD DATA LOCAL INFILE 'E:/Uppgifter/Databas/Competitions.txt' INTO TABLE COMPETITION LINES TERMINATED BY '\r\n';
