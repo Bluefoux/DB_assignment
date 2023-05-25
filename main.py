@@ -1,7 +1,7 @@
-
+import creategui as cg
 
 def main():
-    print("Hello, World!")
+    cg.myui()
 
 
 if __name__ == "__main__":
