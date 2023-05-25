@@ -1,8 +1,11 @@
 import tkinter as tk
 
+def Create_comp_button_clicked():
+    print("Button was clicked!")
+
 def myui():
-    top = tk.Tk()
+    wind = tk.Tk()
     # Code to add widgets will go here...
     #what to add:
-    #
-    top.mainloop()
+    Create_compbutton = tk.Button(wind, text="Create new competition")
+    wind.mainloop()
