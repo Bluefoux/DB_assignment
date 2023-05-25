@@ -34,8 +34,8 @@ class competition:
         try:
             mycursor.execute(query, values)
             invoice = mycursor.fetchall()
-            for x in invoice:
-                print(invoice)
+            for x in invoice: #bara för test
+                print(invoice) #ska inte printas, ska returneras
             return invoice
         except:
             print("No competition with that name found")
