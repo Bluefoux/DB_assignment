@@ -7,12 +7,17 @@ def Create_comp_button_clicked():
 def myui():
     wind = tk.Tk()
     # Code to add widgets will go here...
-    #what to add:
     Create_compbutton = tk.Button(wind, text="Create new competition", command=Create_comp_button_clicked)
     Create_compbutton.pack()
 
     sqlclassobj = sql.sqlting()
-    con = sqlclassobj.connect()
+    db = sqlclassobj.connect()
+    mycursor = sqlclassobj.createcursor()
+    sqlclassobj.mycursor.execute("SELECT * FROM competition")
+    myresult = sqlclassobj.mycursor.fetchall()
+    for row in myresult:
+        print(row)
     
-
+    sqlclassobj.mycursor.close()
+    sqlclassobj.mydb.close()
     wind.mainloop()

@@ -26,6 +26,15 @@ class sqlting:
         except:
             print("Could not create cursor")
             return 0
+    
+    def close(self):
+        try:
+            self.mycursor.close()
+            self.mydb.close()
+            return 1
+        except:
+            print("Could not close cursor or database")
+            return 0
 
 
 #if __name__ == '__main__':
