@@ -58,10 +58,10 @@ class guiclass:
         progwind = tk.Tk()
         compobj.getevents(mycursor)
         #if len(eventlst) != 0:
-        print(len(compobj.eventlist))
-        i = 1
         addeventbutton = tk.Button(progwind, text="Add new event", command= lambda: guiclass.addeventbuttonclick(mydb, mycursor))
         addeventbutton.grid(row=0, column=0)
+        
+        i = 1
         for x in compobj.eventlist:
             y = 0
             if i==1:
