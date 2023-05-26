@@ -14,7 +14,7 @@ class competition:
         self.IndividualStartFee = IndividualStartFee
         self.RelayStartFee = RelayStartFee
         self.Description = Description
-        self.eventlist = {}
+        self.eventlist = EventList
     
     def getcompetitionid(name, mycursor):
         query = "SELECT * FROM competition WHERE Name LIKE %s"
@@ -79,7 +79,8 @@ class competition:
         try:
             mycursor.execute(query, values)
             myresult = mycursor.fetchall()
-            self.eventlist = {**self.eventlist, **myresult}
+            for key, value in myresult.items():
+                self.eventlist[value] = key
             return 1
         except:
             print("No events found")

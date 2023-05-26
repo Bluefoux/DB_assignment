@@ -29,8 +29,10 @@ def myui():
     myresult = sqlclassobj.mycursor.fetchall()
     
     for m in myresult:
-        print(m["Name"])
         compobjlst.append(comp.competition(name=m["Name"], StartDate=m["StartDate"], Enddate=m["EndDate"], CompetitionVenue=m["CompetitionVenue"], Organizer=m["Organizer"], NumberOfLanes=m["NumberOfLanes"], Length=m["Length"], IndividualStartFee=m["IndividualStartFee"], RelayStartFee=m["RelayStartFee"], Description=m["Description"], id=m["ID"]))
+    
+    for i in range(len(compobjlst)):
+        print(compobjlst[i].id)
     
     i = 1
     for x in myresult:
