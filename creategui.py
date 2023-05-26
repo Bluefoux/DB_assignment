@@ -1,22 +1,21 @@
 import tkinter as tk
 import sqlclass as sql
 import competition as comp
+import guiclass as gui
 
 """
 TODO:
 Add new competition button do stuff (kinda done)
 Edit competition 
 Add delete competition button (done)
-program knapp (done)
+program knapp (need to make things happen when clicked)
 Lägg till scroll ting för competitions
-consider making a class for this (its starting to get messy)
+
+consider making a class for most of this (its starting to get messy)
 """
 
 
-def savecompbutton_clicked(db, mycursor, mylst, description):
-    compname = comp.competition(mylst[0].get(), mylst[1].get(), mylst[2].get(), mylst[3].get(), mylst[4].get(), mylst[5].get(), mylst[6].get(), mylst[7].get(), mylst[8].get(), description.get())
-    #compname.save(mycursor, db) #uncomment this when change is wanted in database
-    print("Save button was clicked!")
+
 
 def Create_comp_button_clicked(db, mycursor):
     create_compwind = tk.Tk()
