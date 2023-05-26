@@ -22,27 +22,33 @@ class event:
         self.qualifyingtime = qualifyingtime
         self.relay = relay
         
-    def save(self, mycursor, mydb):
+    def save(self):
+        sqlclassobj = sqlting()
+        sqlclassobj.connect()
+        sqlclassobj.createcursor()
         if(self.id == 0):
             query = "INSERT INTO EVENT (CompetitionID, RegistrationID, EventNumber, EventName, Distance, Gender, MaxAge, QualifyingTime, Relay)"
             values = (self.competitionid, self.registrationid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay)
-            mycursor.execute(query, values)
-            mydb.commit()
-            self.id = mycursor.lastrowid
+            sqlclassobj.mycursor.execute(query, values)
+            sqlclassobj.mydb.commit()
+            self.id = sqlclassobj.mycursor.lastrowid
             return self.id
         else:
             print("Event already exists, update instead")
             query = "UPDATE EVENT SET CompetitionID = %s, RegistrationID = %s, EventNumber = %s, EventName = %s, Distance = %s, Gender = %s, MaxAge = %s, QualifyingTime = %s, Relay = %s WHERE ID = %s"
             values = (self.competitionid, self.registrationid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay, self.id)
-            mycursor.execute(query, values)
-            mydb.commit()
+            sqlclassobj.mycursor.execute(query, values)
+            sqlclassobj.mydb.commit()
             return 0
     
-    def delete(self, mycursor, mydb):
+    def delete(self):
+        sqlclassobj = sqlting()
+        sqlclassobj.connect()
+        sqlclassobj.createcursor()
         query = "DELETE FROM EVENT WHERE CompetitionID = %s, ID = %d"
         value = (self.competitionid, self.id)
-        mycursor.execute(query, value)
-        mydb.commit()
+        sqlclassobj.mycursor.execute(query, value)
+        sqlclassobj.mydb.commit()
         return 0
 
     def getathleats():

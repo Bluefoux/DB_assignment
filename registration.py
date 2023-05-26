@@ -11,20 +11,23 @@ class registration:
         self.age = age
         self.registrationtime = registrationtime
     
-    def save(self, mycursor, mydb):
+    def save(self):
+        sqlclassobj = sqlting()
+        sqlclassobj.connect()
+        sqlclassobj.createcursor()
         if(self.id == 0):
             query = "INSERT INTO REGISTRATIONS (CompetitionID, EventNumber, Name, LastName, Team, Age, RegistrationTime)"
             values = (self.competitionid, self.eventnumber, self.name, self.lastname, self.teamname, self.age, self.registrationtime)
-            mycursor.execute(query, values)
-            mydb.commit()
+            sqlclassobj.mycursor.execute(query, values)
+            sqlclassobj.mydb.commit()
             self.id = mycursor.lastrowid
             return self.id
         else:
             print("Registration already exists, update instead")
             query = "UPDATE REGISTRATIONS SET CompetitionID = %s, EventNumber = %s, Name = %s, LastName = %s, Team = %s, Age = %s, RegistrationTime = %s WHERE ID = %s"
             values = (self.competitionid, self.eventnumber, self.name, self.lastname, self.teamname, self.age, self.registrationtime, self.id)
-            mycursor.execute(query, values)
-            mydb.commit()
+            sqlclassobj.mycursor.execute(query, values)
+            sqlclassobj.mydb.commit()
             return 0
     
     def delete():
@@ -32,7 +35,9 @@ class registration:
     
     def importregistrationfile():
         """
-        LOAD DATA LOCAL INFILE 'E:/Uppgifter/Databas/Competitions.txt' INTO TABLE COMPETITION LINES TERMINATED BY '\r\n';
+        LOAD DATA LOCAL INFILE 'E:/Uppgifter/Databas/Competitions.txt' INTO TABLE COMPETITION 
+        LINES TERMINATED BY '\r\n'
+        (Name, StartDate, EndDate, CompetitionVenue, Organizer, NumberOfLanes, Length, IndividualStartFee, RelayStartFee, Description);
         """
         return 0
     

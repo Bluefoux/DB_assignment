@@ -18,21 +18,22 @@ consider making a class for most of this (its starting to get messy)
 def myui():
     compobjlst = []
     wind = tk.Tk()
+
+    Create_compbutton = tk.Button(wind, text="Create new competition", command= lambda: gui.guiclass.Create_comp_button_clicked())
+    Create_compbutton.grid(row=0, column=0)
+
     sqlclassobj = sql.sqlting()
     sqlclassobj.connect()
     sqlclassobj.createcursor()
-
-    Create_compbutton = tk.Button(wind, text="Create new competition", command= lambda: gui.guiclass.Create_comp_button_clicked(sqlclassobj.mydb, sqlclassobj.mycursor))
-    Create_compbutton.grid(row=0, column=0)
-    
     sqlclassobj.mycursor.execute("SELECT * FROM competition")
     myresult = sqlclassobj.mycursor.fetchall()
+    sqlclassobj.close()
     
     for m in myresult:
         compobjlst.append(comp.competition(name=m["Name"], StartDate=m["StartDate"], Enddate=m["EndDate"], CompetitionVenue=m["CompetitionVenue"], Organizer=m["Organizer"], NumberOfLanes=m["NumberOfLanes"], Length=m["Length"], IndividualStartFee=m["IndividualStartFee"], RelayStartFee=m["RelayStartFee"], Description=m["Description"], id=m["ID"]))
     
-    for i in range(len(compobjlst)):
-        print(compobjlst[i].id)
+    #for i in range(len(compobjlst)):
+    #    print(compobjlst[i].id)
     
     i = 1
     for x in myresult:
@@ -51,11 +52,24 @@ def myui():
                     e = tk.Label(wind, width=20, fg='blue', text = x[key], relief="ridge", anchor="w")
                     e.grid(row=i, column=y)
                 y += 1
-            programbutton = tk.Button(wind, width=20, text = "Program", command= lambda: gui.guiclass.programbuttonclick(sqlclassobj.mydb, sqlclassobj.mycursor, compobjlst[i-2]), relief="ridge", anchor="w")
+            programbutton = tk.Button(
+                wind,
+                width=20,
+                text="Program",
+                command=lambda i=i: gui.guiclass.programbuttonclick(compobjlst[i-2]),
+                relief="ridge",
+                anchor="w"
+            )
             programbutton.grid(row=i, column=y)
-            editcompbutton = tk.Button(wind, width=20, text = "edit/delete", command= lambda: gui.guiclass.editcompbuttonclick(sqlclassobj.mydb, sqlclassobj.mycursor, compobjlst[i-2]), relief="ridge", anchor="w")
+
+            editcompbutton = tk.Button(
+                wind,
+                width=20,
+                text="edit/delete",
+                command=lambda i=i: gui.guiclass.editcompbuttonclick(compobjlst[i-2]),
+                relief="ridge",
+                anchor="w"
+            )
             editcompbutton.grid(row=i, column=y+1)
         i += 1
-    sqlclassobj.mycursor.close()
-    sqlclassobj.mydb.close()
     wind.mainloop()
