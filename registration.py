@@ -14,13 +14,14 @@ class registration:
     def save(self):
         sqlclassobj = sqlting()
         sqlclassobj.connect()
-        sqlclassobj.createcursor()
+        sqlclassobj.createdictcursor()
         if(self.id == 0):
             query = "INSERT INTO REGISTRATIONS (CompetitionID, EventNumber, Name, LastName, Team, Age, RegistrationTime)"
             values = (self.competitionid, self.eventnumber, self.name, self.lastname, self.teamname, self.age, self.registrationtime)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()
             self.id = sqlclassobj.mycursor.lastrowid
+            sqlclassobj.close()
             return self.id
         else:
             print("Registration already exists, update instead")

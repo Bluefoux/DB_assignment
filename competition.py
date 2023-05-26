@@ -2,7 +2,7 @@ import sqlclass as sql
 
 
 class competition:
-    def __init__(self, name=None, StartDate=None, Enddate=None, CompetitionVenue=None, Organizer=None, NumberOfLanes=None, Length=None, IndividualStartFee=None, RelayStartFee=None, EventList=None ,Description=None, id=None):
+    def __init__(self, name=None, StartDate=None, Enddate=None, CompetitionVenue=None, Organizer=None, NumberOfLanes=None, Length=None, IndividualStartFee=None, RelayStartFee=None, Eventdict=None ,Description=None, id=None):
         self.id = id
         self.name = name
         self.StartDate = StartDate
@@ -14,7 +14,7 @@ class competition:
         self.IndividualStartFee = IndividualStartFee
         self.RelayStartFee = RelayStartFee
         self.Description = Description
-        self.eventlist = EventList
+        self.eventdict = {}
     
     def getcompetitionid(name):
         query = "SELECT * FROM competition WHERE Name LIKE %s"
@@ -22,9 +22,10 @@ class competition:
         try:
             sqlclassobj = sql.sqlting()
             sqlclassobj.connect()
-            sqlclassobj.createcursor()
+            sqlclassobj.createdictcursor()
             sqlclassobj.mycursor.execute(query, values)
             mycompetitions = sqlclassobj.mycursor.fetchone()
+            sqlclassobj.close()
             id = mycompetitions["ID"]
             return id
         except:
@@ -37,9 +38,10 @@ class competition:
         try:
             sqlclassobj = sql.sqlting()
             sqlclassobj.connect()
-            sqlclassobj.createcursor()
+            sqlclassobj.createdictcursor()
             sqlclassobj.mycursor.execute(query, values)
             invoice = sqlclassobj.mycursor.fetchall()
+            sqlclassobj.close()
             for x in invoice: #bara för test
                 print(invoice) #ska inte printas, ska returneras
             return invoice
@@ -54,12 +56,13 @@ class competition:
         else:
             sqlclassobj = sql.sqlting()
             sqlclassobj.connect()
-            sqlclassobj.createcursor()
+            sqlclassobj.createdictcursor()
             query = "DELETE FROM competition WHERE ID = %s"
             values = (self.id)
             try:
                 sqlclassobj.mycursor.execute(query, values)
                 sqlclassobj.mydb.commit()
+                sqlclassobj.close()
                 self.id = 0
                 return 1
             except:
@@ -69,12 +72,13 @@ class competition:
     def save(self):
         sqlclassobj = sql.sqlting()
         sqlclassobj.connect()
-        sqlclassobj.createcursor()
+        sqlclassobj.createdictcursor()
         if(self.id == 0):
             query = "INSERT INTO COMPETITION (Name, StartDate, EndDate, CompetitionVenue, Organizer, NumberOfLanes, Length, IndividualStartFee, RelayStartFee, Description)"
             values = (self.name, self.StartDate, self.Enddate, self.CompetitionVenue, self.Organizer, self.NumberOfLanes, self.Length, self.IndividualStartFee, self.RelayStartFee, self.Description)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()
+            sqlclassobj.close()
             self.id = sqlclassobj.mycursor.lastrowid
             return self.id
         else:
@@ -83,23 +87,25 @@ class competition:
             values = (self.name, self.StartDate, self.Enddate, self.CompetitionVenue, self.Organizer, self.NumberOfLanes, self.Length, self.IndividualStartFee, self.RelayStartFee, self.Description, self.id)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()
+            sqlclassobj.close()
             return 0
     
     def getevents(self):
         sqlclassobj = sql.sqlting()
         sqlclassobj.connect()
-        sqlclassobj.createcursor()
+        sqlclassobj.createdictcursor()
         query = "SELECT * FROM EVENT WHERE CompetitionID = %s"
         values = (self.id,)
-        print(self.id)
         #try:
         sqlclassobj.mycursor.execute(query, values)
         myresult = sqlclassobj.mycursor.fetchall()
+        sqlclassobj.close()
+
         for row in myresult:
             event_id = row['ID']
             event_name = row['EventName']
-            # Add the event to the eventlist dictionary
-            self.eventlist[event_id] = event_name
+            # Add the event to the eventdict dictionary
+            self.eventdict[event_id] = event_name
         return 1
         #except:
         #    print("No events found")

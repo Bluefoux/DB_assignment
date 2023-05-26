@@ -17,12 +17,13 @@ class athlete:
     def save():
         sqlclassobj = sqlting()
         sqlclassobj.connect()
-        sqlclassobj.createcursor()
+        sqlclassobj.createdictcursor()
         if(athlete.id == 0):
             query = "INSERT INTO ATHLEATS (StatusID, EventID, Name, LastName, TeamName, Age, RegistrationTime, ResultTime)"
             values = (athlete.statusid, athlete.eventid, athlete.name, athlete.lastname, athlete.teamname, athlete.age, athlete.registrationtime, athlete.resulttime)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()
+            sqlclassobj.close()
             athlete.id = sqlclassobj.mycursor.lastrowid
             return athlete.id
         else:
@@ -31,16 +32,18 @@ class athlete:
             values = (athlete.statusid, athlete.eventid, athlete.name, athlete.lastname, athlete.teamname, athlete.age, athlete.registrationtime, athlete.resulttime, athlete.id)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()
+            sqlclassobj.close()
             return 0
     
     def delete(self):
         sqlclassobj = sqlting()
         sqlclassobj.connect()
-        sqlclassobj.createcursor()
+        sqlclassobj.createdictcursor()
         query = "DELETE FROM ATHLEATS WHERE ID = %d"
         value = (self.id)
         sqlclassobj.mycursor.execute(query, value)
         sqlclassobj.mydb.commit()
+        sqlclassobj.close()
         return 0
 
 class status:
@@ -51,12 +54,13 @@ class status:
     def save():
         sqlclassobj = sqlting()
         sqlclassobj.connect()
-        sqlclassobj.createcursor()
+        sqlclassobj.createdictcursor()
         if(status.id == 0):
             query = "INSERT INTO STATUS (StatusText)"
             values = (status.statustext)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()
+            sqlclassobj.close()
             status.id = sqlclassobj.mycursor.lastrowid
             return status.id
         else:
@@ -65,12 +69,13 @@ class status:
             values = (status.statustext, status.id)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()
+            sqlclassobj.close()
             return 0
     
     def delete():
         sqlclassobj = sqlting()
         sqlclassobj.connect()
-        sqlclassobj.createcursor()
+        sqlclassobj.createdictcursor()
         if(id == 0):
             print("Status does not exist")
             return 0
@@ -80,6 +85,7 @@ class status:
             try:
                 sqlclassobj.mycursor.execute(query, values)
                 sqlclassobj.mydb.commit()
+                sqlclassobj.close()
                 status.id = 0
                 return 1
             except:

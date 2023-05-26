@@ -24,7 +24,7 @@ def myui():
 
     sqlclassobj = sql.sqlting()
     sqlclassobj.connect()
-    sqlclassobj.createcursor()
+    sqlclassobj.createdictcursor()
     sqlclassobj.mycursor.execute("SELECT * FROM competition")
     myresult = sqlclassobj.mycursor.fetchall()
     sqlclassobj.close()

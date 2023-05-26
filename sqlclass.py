@@ -19,7 +19,7 @@ class sqlting:
             print("Could not connect to database")
             return 0
     
-    def createcursor(self):
+    def createdictcursor(self):
         try:
             self.mycursor = self.mydb.cursor(dictionary=True)
             return 1
@@ -40,7 +40,7 @@ class sqlting:
 #if __name__ == '__main__':
 #    ting = sqlting()
 #    con = ting.connect()
-#    mycursor = ting.createcursor()
+#    mycursor = ting.createdictcursor()
  #   ting.mycursor.execute("LOAD DATA LOCAL INFILE 'E:/Uppgifter/Databas/Competitions.txt' INTO TABLE COMPETITION LINES TERMINATED BY '\r\n'")
 #    ting.mydb.commit()
 #    ting.mydb.close()

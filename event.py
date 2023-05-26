@@ -25,13 +25,14 @@ class event:
     def save(self):
         sqlclassobj = sqlting()
         sqlclassobj.connect()
-        sqlclassobj.createcursor()
+        sqlclassobj.createdictcursor()
         if(self.id == 0):
             query = "INSERT INTO EVENT (CompetitionID, RegistrationID, EventNumber, EventName, Distance, Gender, MaxAge, QualifyingTime, Relay)"
             values = (self.competitionid, self.registrationid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()
             self.id = sqlclassobj.mycursor.lastrowid
+            sqlclassobj.close()
             return self.id
         else:
             print("Event already exists, update instead")
@@ -39,16 +40,18 @@ class event:
             values = (self.competitionid, self.registrationid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay, self.id)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()
+            sqlclassobj.close()
             return 0
     
     def delete(self):
         sqlclassobj = sqlting()
         sqlclassobj.connect()
-        sqlclassobj.createcursor()
+        sqlclassobj.createdictcursor()
         query = "DELETE FROM EVENT WHERE CompetitionID = %s, ID = %d"
         value = (self.competitionid, self.id)
         sqlclassobj.mycursor.execute(query, value)
         sqlclassobj.mydb.commit()
+        sqlclassobj.close()
         return 0
 
     def getathleats():

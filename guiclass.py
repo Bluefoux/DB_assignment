@@ -1,6 +1,6 @@
 import tkinter as tk
 import competition as comp
-import sqlclass as sql
+#import sqlclass as sql
 
 class guiclass:
     def __init__() -> None:
@@ -57,18 +57,57 @@ class guiclass:
 
     def programbuttonclick(compobj):
         progwind = tk.Tk()
-        sqlclassobj = sql.sqlting()
-        sqlclassobj.connect()
-        sqlclassobj.createcursor()
+        #sqlclassobj = sql.sqlting()
+        #sqlclassobj.connect()
+        #sqlclassobj.createdictcursor()
         compobj.getevents()
         #if len(eventlst) != 0:
         addeventbutton = tk.Button(progwind, text="Add new event", command= lambda: guiclass.addeventbuttonclick())
         addeventbutton.grid(row=0, column=0)
-        if compobj.eventlist is not None:
-            for z in compobj.eventlist:
+        if compobj.eventdict is not None:
+            for z in compobj.eventdict:
                 print(z)
+
+            #trying something
             i = 1
-            for x in compobj.eventlist:
+            for event_id, event_name in compobj.eventdict.items():
+                y = 0
+                if i == 1:
+                    e = tk.Label(progwind, width=20, text="Event ID", relief="ridge", anchor="w")
+                    e.grid(row=i, column=y)
+                    y += 1
+                    e = tk.Label(progwind, width=20, text="Event Name", relief="ridge", anchor="w")
+                    e.grid(row=i, column=y)
+                    y += 1
+                else:
+                    for key, value in compobj.eventdict.items():
+                        if key == "Name":
+                            e = tk.Button(progwind, width=20, text = compobj.eventdict[key], relief="ridge", anchor="w")
+                            e.grid(row=i, column=y)
+                        else:
+                            e = tk.Label(progwind, width=20, fg='blue', text = compobj.eventdict[key], relief="ridge", anchor="w")
+                            e.grid(row=i, column=y)
+                            y += 1
+                            startlstbutton = tk.Button(
+                                progwind,
+                                width=20,
+                                text="Start list",
+                                command=lambda i=i:guiclass.startlstbuttonclick(compobj),
+                                relief="ridge",
+                                anchor="w"
+                            )
+                        #startlstbutton = tk.Button(progwind, width=20, text = "Start list", command= lambda: guiclass.startlstbuttonclick(mydb, mycursor, compobj), relief="ridge", anchor="w")
+                        startlstbutton.grid(row=i, column=y)
+                        startlstbutton = tk.Button(progwind, width=20, text = "Heat list", command= lambda: guiclass.startlstbuttonclick(compobj), relief="ridge", anchor="w")
+                        startlstbutton.grid(row=i, column=y+1)
+                        startlstbutton = tk.Button(progwind, width=20, text = "Result list", command= lambda: guiclass.startlstbuttonclick(compobj), relief="ridge", anchor="w")
+                        startlstbutton.grid(row=i, column=y+2)
+                        editeventbutton = tk.Button(progwind, width=20, text = "edit/delete", command= lambda: guiclass.editeventbuttonclick(compobj), relief="ridge", anchor="w")
+                        editeventbutton.grid(row=i, column=y+3)
+                        i += 1
+            """
+            i = 1
+            for x in compobj.eventdict:
                 y = 0
                 if i==1:
                     for k in x.keys():
@@ -101,7 +140,7 @@ class guiclass:
                     startlstbutton.grid(row=i, column=y+2)
                     editeventbutton = tk.Button(progwind, width=20, text = "edit/delete", command= lambda: guiclass.editeventbuttonclick(compobj), relief="ridge", anchor="w")
                     editeventbutton.grid(row=i, column=y+3)
-                i += 1
+                i += 1"""
         else:
             print(compobj.id)
         progwind.mainloop()
