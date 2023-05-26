@@ -1,6 +1,7 @@
 import tkinter as tk
 import competition as comp
 import sqlclass as sql
+import startlstgui as startlst
 
 class guiclass:
     def __init__() -> None:
@@ -45,9 +46,6 @@ class guiclass:
     
     def editeventbuttonclick(compobj): #needed in programbuttonclick
         print("edit event!")
-
-    def startlstbuttonclick(compobj): #needed in programbuttonclick
-        print("Show start list!")
 
     def heatlstbuttonclick(compobj): #needed in programbuttonclick
         print("Show heat list!")
@@ -103,21 +101,4 @@ class guiclass:
             i += 1
         progwind.mainloop()
         print("Show program!")
-
-"""startlstbutton = tk.Button(
-    progwind,
-    width=20,
-    text="Start list",
-    command=lambda i=i:guiclass.startlstbuttonclick(compobj),
-    relief="ridge",
-    anchor="w"
-)
-#startlstbutton = tk.Button(progwind, width=20, text = "Start list", command= lambda: guiclass.startlstbuttonclick(mydb, mycursor, compobj), relief="ridge", anchor="w")
-startlstbutton.grid(row=i, column=y)
-startlstbutton = tk.Button(progwind, width=20, text = "Heat list", command= lambda: guiclass.startlstbuttonclick(compobj), relief="ridge", anchor="w")
-startlstbutton.grid(row=i, column=y+1)
-startlstbutton = tk.Button(progwind, width=20, text = "Result list", command= lambda: guiclass.startlstbuttonclick(compobj), relief="ridge", anchor="w")
-startlstbutton.grid(row=i, column=y+2)
-editeventbutton = tk.Button(progwind, width=20, text = "edit/delete", command= lambda: guiclass.editeventbuttonclick(compobj), relief="ridge", anchor="w")
-editeventbutton.grid(row=i, column=y+3)"""
         
