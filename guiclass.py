@@ -60,7 +60,8 @@ class guiclass:
         #if len(eventlst) != 0:
         addeventbutton = tk.Button(progwind, text="Add new event", command= lambda: guiclass.addeventbuttonclick(mydb, mycursor))
         addeventbutton.grid(row=0, column=0)
-        
+        for z in compobj.eventlist:
+            print(z)
         i = 1
         for x in compobj.eventlist:
             y = 0
@@ -82,11 +83,11 @@ class guiclass:
                 startlstbutton = tk.Button(progwind, width=20, text = "Start list", command= lambda: guiclass.startlstbuttonclick(mydb, mycursor, compobj), relief="ridge", anchor="w")
                 startlstbutton.grid(row=i, column=y)
                 startlstbutton = tk.Button(progwind, width=20, text = "Heat list", command= lambda: guiclass.startlstbuttonclick(mydb, mycursor, compobj), relief="ridge", anchor="w")
-                startlstbutton.grid(row=i, column=y)
+                startlstbutton.grid(row=i, column=y+1)
                 startlstbutton = tk.Button(progwind, width=20, text = "Result list", command= lambda: guiclass.startlstbuttonclick(mydb, mycursor, compobj), relief="ridge", anchor="w")
-                startlstbutton.grid(row=i, column=y)
+                startlstbutton.grid(row=i, column=y+2)
                 editeventbutton = tk.Button(progwind, width=20, text = "edit/delete", command= lambda: guiclass.editeventbuttonclick(mydb, mycursor, compobj), relief="ridge", anchor="w")
-                editeventbutton.grid(row=i, column=y+1)
+                editeventbutton.grid(row=i, column=y+3)
             i += 1
         
         progwind.mainloop()

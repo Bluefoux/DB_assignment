@@ -81,7 +81,7 @@ class competition:
             myresult = mycursor.fetchall()
             for x in myresult:
                 self.eventlist.append(x)
-            return self.eventlist
+            return 1
         except:
             print("No events found")
             return 0
