@@ -10,10 +10,9 @@ import mysql.connector
 from sqlclass import sqlting
 
 class event:
-    def __init__(self, id, competitionid, registrationid, eventnumber, eventname, distance, gender, maxage, qualifyingtime, relay):
+    def __init__(self, id, competitionid, eventnumber, eventname, distance, gender, maxage, qualifyingtime, relay):
         self.id = id
         self.competitionid = competitionid
-        self.registrationid = registrationid
         self.eventnumber = eventnumber
         self.eventname = eventname
         self.distance = distance
@@ -27,8 +26,8 @@ class event:
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
         if(self.id == 0):
-            query = "INSERT INTO EVENT (CompetitionID, RegistrationID, EventNumber, EventName, Distance, Gender, MaxAge, QualifyingTime, Relay)"
-            values = (self.competitionid, self.registrationid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay)
+            query = "INSERT INTO EVENT (CompetitionID, EventNumber, EventName, Distance, Gender, MaxAge, QualifyingTime, Relay)"
+            values = (self.competitionid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()
             self.id = sqlclassobj.mycursor.lastrowid
@@ -36,8 +35,8 @@ class event:
             return self.id
         else:
             print("Event already exists, update instead")
-            query = "UPDATE EVENT SET CompetitionID = %s, RegistrationID = %s, EventNumber = %s, EventName = %s, Distance = %s, Gender = %s, MaxAge = %s, QualifyingTime = %s, Relay = %s WHERE ID = %s"
-            values = (self.competitionid, self.registrationid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay, self.id)
+            query = "UPDATE EVENT SET CompetitionID = %s, EventNumber = %s, EventName = %s, Distance = %s, Gender = %s, MaxAge = %s, QualifyingTime = %s, Relay = %s WHERE ID = %s"
+            values = (self.competitionid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay, self.id)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()
             sqlclassobj.close()

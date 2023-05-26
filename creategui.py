@@ -43,33 +43,35 @@ def myui():
                 e = tk.Label(wind, width=20, text = k, relief="ridge", anchor="w")
                 e.grid(row=i, column=y)
                 y += 1
-        else:
-            for key, value in x.items():
-                if key == "Name":
-                    e = tk.Button(wind, width=20, text = x[key], relief="ridge", anchor="w")
-                    e.grid(row=i, column=y)
-                else:
-                    e = tk.Label(wind, width=20, fg='blue', text = x[key], relief="ridge", anchor="w")
-                    e.grid(row=i, column=y)
-                y += 1
-            programbutton = tk.Button(
-                wind,
-                width=20,
-                text="Program",
-                command=lambda i=i: gui.guiclass.programbuttonclick(compobjlst[i-2]),
-                relief="ridge",
-                anchor="w"
-            )
-            programbutton.grid(row=i, column=y)
+            y=0
+            i += 1
 
-            editcompbutton = tk.Button(
-                wind,
-                width=20,
-                text="edit/delete",
-                command=lambda i=i: gui.guiclass.editcompbuttonclick(compobjlst[i-2]),
-                relief="ridge",
-                anchor="w"
-            )
-            editcompbutton.grid(row=i, column=y+1)
+        for key, value in x.items():
+            if key == "Name":
+                e = tk.Button(wind, width=20, text = x[key], relief="ridge", anchor="w")
+                e.grid(row=i, column=y)
+            else:
+                e = tk.Label(wind, width=20, fg='blue', text = x[key], relief="ridge", anchor="w")
+                e.grid(row=i, column=y)
+            y += 1
+        programbutton = tk.Button(
+            wind,
+            width=20,
+            text="Program",
+            command=lambda i=i: gui.guiclass.programbuttonclick(compobjlst[i-2]),
+            relief="ridge",
+            anchor="w"
+        )
+        programbutton.grid(row=i, column=y)
+
+        editcompbutton = tk.Button(
+            wind,
+            width=20,
+            text="edit/delete",
+            command=lambda i=i: gui.guiclass.editcompbuttonclick(compobjlst[i-2]),
+            relief="ridge",
+            anchor="w"
+        )
+        editcompbutton.grid(row=i, column=y+1)
         i += 1
     wind.mainloop()
