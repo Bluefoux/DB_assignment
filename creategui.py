@@ -4,17 +4,18 @@ import competition as comp
 
 """
 TODO:
-Add new competition button do stuff
+Add new competition button do stuff (kinda done)
 Edit competition 
-Add delete competition button
-program knapp
+Add delete competition button (done)
+program knapp (done)
 Lägg till scroll ting för competitions
+consider making a class for this (its starting to get messy)
 """
 
 
 def savecompbutton_clicked(db, mycursor, mylst, description):
     compname = comp.competition(mylst[0].get(), mylst[1].get(), mylst[2].get(), mylst[3].get(), mylst[4].get(), mylst[5].get(), mylst[6].get(), mylst[7].get(), mylst[8].get(), description.get())
-    #compname.save(mycursor, db)
+    #compname.save(mycursor, db) #uncomment this when change is wanted in database
     print("Save button was clicked!")
 
 def Create_comp_button_clicked(db, mycursor):
@@ -39,16 +40,28 @@ def Create_comp_button_clicked(db, mycursor):
     create_compwind.mainloop()
     print("Button was clicked!")
 
+def startlstbuttonclick(mydb, mycursor): #needed in programbuttonclick
+    print("Show start list!")
+
+def heatlstbuttonclick(mydb, mycursor): #needed in programbuttonclick
+    print("Show heat list!")
+
+def resultbuttonclick(mydb, mycursor): #needed in programbuttonclick
+    print("Show result list!")
+
+def editcompbuttonclick(mydb, mycursor): #needed in programbuttonclick
+    print("edit competition!")
+
+def programbuttonclick(mydb, mycursor):
+    print("Show program!")
+
 def myui():
     wind = tk.Tk()
-    #wind.geometry("800x600")
-    # Code to add widgets will go here...
     sqlclassobj = sql.sqlting()
     sqlclassobj.connect()
     sqlclassobj.createcursor()
 
     Create_compbutton = tk.Button(wind, text="Create new competition", command= lambda: Create_comp_button_clicked(sqlclassobj.mydb, sqlclassobj.mycursor))
-    #Create_compbutton.pack()
     Create_compbutton.grid(row=0, column=0)
     
     sqlclassobj.mycursor.execute("SELECT * FROM competition")
@@ -58,18 +71,31 @@ def myui():
         y = 0
         if i==1:
             for k in x.keys():
-                e = tk.Label(wind, width=20, fg='blue', text = k, relief="ridge", anchor="w")
+                e = tk.Label(wind, width=20, text = k, relief="ridge", anchor="w")
                 e.grid(row=i, column=y)
                 y += 1
         else:
+            #make list of competition objects
             for key, value in x.items():
                 if key == "Name":
-                    e = tk.Button(wind, width=20, fg='blue', text = x[key], relief="ridge", anchor="w")
+                    e = tk.Button(wind, width=20, text = x[key], relief="ridge", anchor="w")
                     e.grid(row=i, column=y)
                 else:
                     e = tk.Label(wind, width=20, fg='blue', text = x[key], relief="ridge", anchor="w")
                     e.grid(row=i, column=y)
                 y += 1
+            programbutton = tk.Button(wind, width=20, text = "Start List", command= lambda: programbuttonclick(sqlclassobj.mydb, sqlclassobj.mycursor), relief="ridge", anchor="w")
+            programbutton.grid(row=i, column=y)
+            editcompbutton = tk.Button(wind, width=20, text = "edit/delete", command= lambda: editcompbuttonclick(sqlclassobj.mydb, sqlclassobj.mycursor), relief="ridge", anchor="w")
+            editcompbutton.grid(row=i, column=y+1)
+            """
+            startlstbutton = tk.Button(wind, width=20, text = "Start List", command= lambda: startlstbuttonclick(sqlclassobj.mydb, sqlclassobj.mycursor), relief="ridge", anchor="w")
+            startlstbutton.grid(row=i, column=y)
+            heatlstbutton = tk.Button(wind, width=20, text = "Heat List", command= lambda: heatlstbuttonclick(sqlclassobj.mydb, sqlclassobj.mycursor), relief="ridge", anchor="w")
+            heatlstbutton.grid(row=i, column=y+1)
+            resultlstbutton = tk.Button(wind, width=20, text = "Result List", command= lambda: resultbuttonclick(sqlclassobj.mydb, sqlclassobj.mycursor), relief="ridge", anchor="w")
+            resultlstbutton.grid(row=i, column=y+2)
+            """
         i += 1
     sqlclassobj.mycursor.close()
     sqlclassobj.mydb.close()
