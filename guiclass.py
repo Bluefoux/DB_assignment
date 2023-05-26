@@ -103,7 +103,7 @@ class guiclass:
                 progwind,
                 width=20,
                 text="Heat list",
-                command=lambda i=i: guiclass.heatlstbuttonclick(eventobjlst[i-2]),
+                command=lambda i=i: startlst.startlstclass.heatlstbuttonclick(eventobjlst[i-2]),
                 relief="ridge",
                 anchor="w"
             )
