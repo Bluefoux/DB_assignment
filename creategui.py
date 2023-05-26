@@ -45,7 +45,7 @@ def myui():
                     e = tk.Label(wind, width=20, fg='blue', text = x[key], relief="ridge", anchor="w")
                     e.grid(row=i, column=y)
                 y += 1
-            programbutton = tk.Button(wind, width=20, text = "Start List", command= lambda: gui.guiclass.programbuttonclick(sqlclassobj.mydb, sqlclassobj.mycursor), relief="ridge", anchor="w")
+            programbutton = tk.Button(wind, width=20, text = "Program", command= lambda: gui.guiclass.programbuttonclick(sqlclassobj.mydb, sqlclassobj.mycursor), relief="ridge", anchor="w")
             programbutton.grid(row=i, column=y)
             editcompbutton = tk.Button(wind, width=20, text = "edit/delete", command= lambda: gui.guiclass.editcompbuttonclick(sqlclassobj.mydb, sqlclassobj.mycursor), relief="ridge", anchor="w")
             editcompbutton.grid(row=i, column=y+1)

@@ -6,7 +6,7 @@ class guiclass:
     def setcompobjlst(myresult):
         compobjlst = []
         for x in myresult:
-            compobjlst.append(comp.competition(x["Name"], x["Start Date"], x["End Date"], x["Venue"], x["Organizer"], x["Number of lanes"], x["Pool length"], x["Individual fee"], x["Relay fee"], x["Description"], None, x["ID"]))
+            compobjlst.append(comp.competition(x["Name"], x["StartDate"], x["EndDate"], x["CompetitionVenue"], x["Organizer"], x["NumberOfLanes"], x["Length"], x["IndividualStartFee"], x["RelayStartFee"], x["Description"], None, x["ID"]))
         return compobjlst
 
     def savecompbutton_clicked(db, mycursor, mylst, description):
