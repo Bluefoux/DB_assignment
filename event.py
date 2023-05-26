@@ -44,28 +44,22 @@ class event:
         mycursor.execute(query, value)
         mydb.commit()
         return 0
-    
+
     def getathleats():
-        return 0
-    
-    def generateheatlist():
         return 0
     
     def printstartlist(self):
         if(self.id == 0):
             print("event does not exist")
-        
         return 0
     
     def printheatlist(self):
         if(self.id == 0):
             print("event does not exist") 
-        
         return 0
 
     def printresultlist(self):
         if(self.id == 0):
             print("event does not exist") 
-        
         return 0
     

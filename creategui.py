@@ -16,6 +16,7 @@ consider making a class for most of this (its starting to get messy)
 
 
 def myui():
+    compobjlst = []
     wind = tk.Tk()
     sqlclassobj = sql.sqlting()
     sqlclassobj.connect()
@@ -26,7 +27,10 @@ def myui():
     
     sqlclassobj.mycursor.execute("SELECT * FROM competition")
     myresult = sqlclassobj.mycursor.fetchall()
-    compobjlst = gui.guiclass.setcompobjlst(myresult)
+    
+    for m in myresult:
+        compobjlst.append(comp.competition(m["Name"], m["StartDate"], m["EndDate"], m["CompetitionVenue"], m["Organizer"], m["NumberOfLanes"], m["Length"], m["IndividualStartFee"], m["RelayStartFee"], m["Description"], None, m["ID"]))
+    
     i = 1
     for x in myresult:
         y = 0
@@ -36,7 +40,6 @@ def myui():
                 e.grid(row=i, column=y)
                 y += 1
         else:
-            #make list of competition objects
             for key, value in x.items():
                 if key == "Name":
                     e = tk.Button(wind, width=20, text = x[key], relief="ridge", anchor="w")
@@ -45,9 +48,9 @@ def myui():
                     e = tk.Label(wind, width=20, fg='blue', text = x[key], relief="ridge", anchor="w")
                     e.grid(row=i, column=y)
                 y += 1
-            programbutton = tk.Button(wind, width=20, text = "Program", command= lambda: gui.guiclass.programbuttonclick(sqlclassobj.mydb, sqlclassobj.mycursor), relief="ridge", anchor="w")
+            programbutton = tk.Button(wind, width=20, text = "Program", command= lambda: gui.guiclass.programbuttonclick(sqlclassobj.mydb, sqlclassobj.mycursor, compobjlst[i-2]), relief="ridge", anchor="w")
             programbutton.grid(row=i, column=y)
-            editcompbutton = tk.Button(wind, width=20, text = "edit/delete", command= lambda: gui.guiclass.editcompbuttonclick(sqlclassobj.mydb, sqlclassobj.mycursor), relief="ridge", anchor="w")
+            editcompbutton = tk.Button(wind, width=20, text = "edit/delete", command= lambda: gui.guiclass.editcompbuttonclick(sqlclassobj.mydb, sqlclassobj.mycursor, compobjlst[i-2]), relief="ridge", anchor="w")
             editcompbutton.grid(row=i, column=y+1)
         i += 1
     sqlclassobj.mycursor.close()

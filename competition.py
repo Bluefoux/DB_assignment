@@ -14,7 +14,7 @@ class competition:
         self.IndividualStartFee = IndividualStartFee
         self.RelayStartFee = RelayStartFee
         self.Description = Description
-        #self.eventlist = eventlist #add later (need a function to create this list)
+        self.eventlist = eventlist
     
     def getcompetitionid(name, mycursor):
         query = "SELECT * FROM competition WHERE Name LIKE %s"

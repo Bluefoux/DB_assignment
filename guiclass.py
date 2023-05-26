@@ -2,12 +2,12 @@ import tkinter as tk
 import competition as comp
 
 class guiclass:
+    def __init__() -> None:
+        pass
 
-    def setcompobjlst(myresult):
-        compobjlst = []
-        for x in myresult:
-            compobjlst.append(comp.competition(x["Name"], x["StartDate"], x["EndDate"], x["CompetitionVenue"], x["Organizer"], x["NumberOfLanes"], x["Length"], x["IndividualStartFee"], x["RelayStartFee"], x["Description"], None, x["ID"]))
-        return compobjlst
+    #def setcompobjlst(x):
+    #    compobj = (comp.competition(x["Name"], x["StartDate"], x["EndDate"], x["CompetitionVenue"], x["Organizer"], x["NumberOfLanes"], x["Length"], x["IndividualStartFee"], x["RelayStartFee"], x["Description"], None, x["ID"]))
+    #    return compobj
 
     def savecompbutton_clicked(db, mycursor, mylst, description):
         compname = comp.competition(mylst[0].get(), mylst[1].get(), mylst[2].get(), mylst[3].get(), mylst[4].get(), mylst[5].get(), mylst[6].get(), mylst[7].get(), mylst[8].get(), description.get())
@@ -35,7 +35,16 @@ class guiclass:
         savecompbutton.grid(row=11, column=1)
         create_compwind.mainloop()
         print("Button was clicked!")
+
+    def editcompbuttonclick(mydb, mycursor, compobj):
+        print("edit competition!")
+
+    def addeventbuttonclick(mydb, mycursor):
+        print("add event!")
     
+    def editeventbuttonclick(mydb, mycursor, compobj): #needed in programbuttonclick
+        print("edit event!")
+
     def startlstbuttonclick(mydb, mycursor): #needed in programbuttonclick
         print("Show start list!")
 
@@ -45,10 +54,42 @@ class guiclass:
     def resultbuttonclick(mydb, mycursor): #needed in programbuttonclick
         print("Show result list!")
 
-    def editcompbuttonclick(mydb, mycursor): #needed in programbuttonclick
-        print("edit competition!")
-
-    def programbuttonclick(mydb, mycursor):
+    def programbuttonclick(mydb, mycursor, compobj):
+        progwind = tk.Tk()
+        compobj.getevents(mycursor)
+        #if len(eventlst) != 0:
+        print(len(compobj.eventlist))
+        i = 1
+        addeventbutton = tk.Button(progwind, text="Add new event", command= lambda: guiclass.addeventbuttonclick(mydb, mycursor))
+        addeventbutton.grid(row=0, column=0)
+        for x in compobj.eventlist:
+            y = 0
+            if i==1:
+                for k in x.keys():
+                    e = tk.Label(progwind, width=20, text = k, relief="ridge", anchor="w")
+                    e.grid(row=i, column=y)
+                    y += 1
+            else:
+                #make list of competition objects
+                for key, value in x.items():
+                    if key == "Name":
+                        e = tk.Button(progwind, width=20, text = x[key], relief="ridge", anchor="w")
+                        e.grid(row=i, column=y)
+                    else:
+                        e = tk.Label(progwind, width=20, fg='blue', text = x[key], relief="ridge", anchor="w")
+                        e.grid(row=i, column=y)
+                    y += 1
+                startlstbutton = tk.Button(progwind, width=20, text = "Start list", command= lambda: guiclass.startlstbuttonclick(mydb, mycursor, compobj), relief="ridge", anchor="w")
+                startlstbutton.grid(row=i, column=y)
+                startlstbutton = tk.Button(progwind, width=20, text = "Heat list", command= lambda: guiclass.startlstbuttonclick(mydb, mycursor, compobj), relief="ridge", anchor="w")
+                startlstbutton.grid(row=i, column=y)
+                startlstbutton = tk.Button(progwind, width=20, text = "Result list", command= lambda: guiclass.startlstbuttonclick(mydb, mycursor, compobj), relief="ridge", anchor="w")
+                startlstbutton.grid(row=i, column=y)
+                editeventbutton = tk.Button(progwind, width=20, text = "edit/delete", command= lambda: guiclass.editeventbuttonclick(mydb, mycursor, compobj), relief="ridge", anchor="w")
+                editeventbutton.grid(row=i, column=y+1)
+            i += 1
+        
+        progwind.mainloop()
         print("Show program!")
 
 
