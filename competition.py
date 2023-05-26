@@ -74,13 +74,12 @@ class competition:
             return 0
     
     def getevents(self, mycursor):
-        query = "SELECT * FROM event WHERE CompetitionID = %s"
+        query = "SELECT * FROM EVENT WHERE CompetitionID = %s"
         values = (self.id)
         try:
             mycursor.execute(query, values)
             myresult = mycursor.fetchall()
-            for x in myresult:
-                self.eventlist.append(x)
+            self.eventlist = {**self.eventlist, **myresult}
             return 1
         except:
             print("No events found")
