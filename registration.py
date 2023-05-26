@@ -20,7 +20,7 @@ class registration:
             values = (self.competitionid, self.eventnumber, self.name, self.lastname, self.teamname, self.age, self.registrationtime)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()
-            self.id = mycursor.lastrowid
+            self.id = sqlclassobj.mycursor.lastrowid
             return self.id
         else:
             print("Registration already exists, update instead")

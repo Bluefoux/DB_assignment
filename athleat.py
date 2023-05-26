@@ -23,7 +23,7 @@ class athlete:
             values = (athlete.statusid, athlete.eventid, athlete.name, athlete.lastname, athlete.teamname, athlete.age, athlete.registrationtime, athlete.resulttime)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()
-            athlete.id = mycursor.lastrowid
+            athlete.id = sqlclassobj.mycursor.lastrowid
             return athlete.id
         else:
             print("Event already exists, update instead")
