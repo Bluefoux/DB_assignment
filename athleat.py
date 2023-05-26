@@ -2,7 +2,7 @@
 from sqlclass import sqlting
 
 class athlete:
-    def __init__(self, id, statusid, eventid, name, lastname, teamname, age, registrationtime, resulttime):
+    def __init__(self, statusid=None, eventid=None, name=None, lastname=None, teamname=None, age=None, registrationtime=None, resulttime=None, id=None):
         self.id = id
         self.statusid = statusid
         self.eventid = eventid
