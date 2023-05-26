@@ -2,7 +2,7 @@ from sqlclass import sqlting
 
 
 class competition:
-    def __init__(self=None, id=None, name=None, StartDate=None, Enddate=None, CompetitionVenue=None, Organizer=None, NumberOfLanes=None, Length=None, IndividualStartFee=None, RelayStartFee=None, Description=None, eventlist=None):
+    def __init__(self=None, name=None, StartDate=None, Enddate=None, CompetitionVenue=None, Organizer=None, NumberOfLanes=None, Length=None, IndividualStartFee=None, RelayStartFee=None, Description=None, eventlist=None, id=None):
         self.id = id
         self.name = name
         self.StartDate = StartDate
