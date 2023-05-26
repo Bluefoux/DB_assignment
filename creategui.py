@@ -13,7 +13,7 @@ Lägg till scroll ting för competitions
 
 
 def savecompbutton_clicked(db, mycursor, mylst, description):
-    compname = comp.competition(mylst[0].get(), mylst[1].get(), mylst[2].get(), mylst[3].get(), mylst[4].get(), mylst[5].get(), mylst[6].get(), mylst[7].get(), mylst[8].get(), mylst[9].get(), description.get())
+    compname = comp.competition(mylst[0].get(), mylst[1].get(), mylst[2].get(), mylst[3].get(), mylst[4].get(), mylst[5].get(), mylst[6].get(), mylst[7].get(), mylst[8].get(), description.get())
     compname.save(mycursor, db)
     print("Save button was clicked!")
 
@@ -28,6 +28,7 @@ def Create_comp_button_clicked(db, mycursor):
         myentry = tk.Entry(create_compwind, bd = 10)
         myentry.grid(row=i, column=1)
         mylst.append(myentry)
+        i += 1
     
     e = tk.Label(create_compwind, width=20, fg='blue', text = "Description", relief="ridge", anchor="w")
     e.grid(row=10, column=0)
