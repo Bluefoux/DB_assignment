@@ -1,8 +1,14 @@
 import tkinter as tk
-import sqlclass as sql
 import competition as comp
 
 class guiclass:
+
+    def setcompobjlst(myresult):
+        compobjlst = []
+        for x in myresult:
+            compobjlst.append(comp.competition(x["Name"], x["Start Date"], x["End Date"], x["Venue"], x["Organizer"], x["Number of lanes"], x["Pool length"], x["Individual fee"], x["Relay fee"], x["Description"], None, x["ID"]))
+        return compobjlst
+
     def savecompbutton_clicked(db, mycursor, mylst, description):
         compname = comp.competition(mylst[0].get(), mylst[1].get(), mylst[2].get(), mylst[3].get(), mylst[4].get(), mylst[5].get(), mylst[6].get(), mylst[7].get(), mylst[8].get(), description.get())
         #compname.save(mycursor, db) #uncomment this when change is wanted in database

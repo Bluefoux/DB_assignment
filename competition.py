@@ -2,7 +2,7 @@ from sqlclass import sqlting
 
 
 class competition:
-    def __init__(self=None, name=None, StartDate=None, Enddate=None, CompetitionVenue=None, Organizer=None, NumberOfLanes=None, Length=None, IndividualStartFee=None, RelayStartFee=None, Description=None, eventlist=None, id=None):
+    def __init__(self, name=None, StartDate=None, Enddate=None, CompetitionVenue=None, Organizer=None, NumberOfLanes=None, Length=None, IndividualStartFee=None, RelayStartFee=None, Description=None, eventlist=None, id=None):
         self.id = id
         self.name = name
         self.StartDate = StartDate
@@ -14,7 +14,7 @@ class competition:
         self.IndividualStartFee = IndividualStartFee
         self.RelayStartFee = RelayStartFee
         self.Description = Description
-        self.eventlist = eventlist
+        #self.eventlist = eventlist #add later (need a function to create this list)
     
     def getcompetitionid(name, mycursor):
         query = "SELECT * FROM competition WHERE Name LIKE %s"

@@ -26,6 +26,7 @@ def myui():
     
     sqlclassobj.mycursor.execute("SELECT * FROM competition")
     myresult = sqlclassobj.mycursor.fetchall()
+    compobjlst = gui.guiclass.setcompobjlst(myresult)
     i = 1
     for x in myresult:
         y = 0
