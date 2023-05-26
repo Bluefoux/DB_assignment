@@ -12,34 +12,29 @@ Lägg till scroll ting för competitions
 """
 
 
-def savecompbutton_clicked(db, mycursor):
-    compname = comp.competition()
+def savecompbutton_clicked(db, mycursor, mylst, description):
+    compname = comp.competition(mylst[0].get(), mylst[1].get(), mylst[2].get(), mylst[3].get(), mylst[4].get(), mylst[5].get(), mylst[6].get(), mylst[7].get(), mylst[8].get(), mylst[9].get(), description.get())
     compname.save(mycursor, db)
     print("Save button was clicked!")
 
 def Create_comp_button_clicked(db, mycursor):
     create_compwind = tk.Tk()
-    e = tk.Label(create_compwind, width=20, fg='blue', text = "Name", relief="ridge", anchor="w")
-    e.grid(row=1, column=0)
-    e = tk.Label(create_compwind, width=20, fg='blue', text = "Start Date", relief="ridge", anchor="w")
-    e.grid(row=2, column=0)
-    e = tk.Label(create_compwind, width=20, fg='blue', text = "End Date", relief="ridge", anchor="w")
-    e.grid(row=3, column=0)
-    e = tk.Label(create_compwind, width=20, fg='blue', text = "Venue", relief="ridge", anchor="w")
-    e.grid(row=4, column=0)
-    e = tk.Label(create_compwind, width=20, fg='blue', text = "Oranizer", relief="ridge", anchor="w")
-    e.grid(row=5, column=0)
-    e = tk.Label(create_compwind, width=20, fg='blue', text = "Number of lanes", relief="ridge", anchor="w")
-    e.grid(row=6, column=0)
-    e = tk.Label(create_compwind, width=20, fg='blue', text = "Pool length", relief="ridge", anchor="w")
-    e.grid(row=7, column=0)
-    e = tk.Label(create_compwind, width=20, fg='blue', text = "Individual fee", relief="ridge", anchor="w")
-    e.grid(row=8, column=0)
-    e = tk.Label(create_compwind, width=20, fg='blue', text = "Relay fee", relief="ridge", anchor="w")
-    e.grid(row=9, column=0)
+    mytup = ("Name", "Start Date", "End Date", "Venue", "Organizer", "Number of lanes", "Pool length", "Individual fee", "Relay fee")
+    mylst = []
+    i=1
+    for x in mytup:
+        e = tk.Label(create_compwind, width=20, fg='blue', text = x, relief="ridge", anchor="w")
+        e.grid(row=i, column=0)
+        myentry = tk.Entry(create_compwind, bd = 10)
+        myentry.grid(row=i, column=1)
+        mylst.append(myentry)
+    
     e = tk.Label(create_compwind, width=20, fg='blue', text = "Description", relief="ridge", anchor="w")
     e.grid(row=10, column=0)
-    savecompbutton = tk.Button(create_compwind, text="Save", command=savecompbutton_clicked)
+    description = tk.Entry(create_compwind, bd = 30)
+    e.grid(row=1, column=0)
+    savecompbutton = tk.Button(create_compwind, text="Save", command=savecompbutton_clicked(db, mycursor, mylst, description))
+    savecompbutton.grid(row=11, column=1)
     create_compwind.mainloop()
     print("Button was clicked!")
 
