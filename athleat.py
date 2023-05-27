@@ -55,18 +55,18 @@ class athlete:
         print("Save button was clicked!")
 
     def addathleatbuttonclick(eventobj):
-        mytup = ("Name", "Last Name", "Team", "Gender", "Age", "Heat", "Lane", "Registration Time")
+        mytup = ("Name", "Last Name", "Team", "Gender", "Age", "Registration Time")
         mylst = []
         athleatwind = tk.Tk()
         athleatwind.title("Add Athleat")
-        
+
         automaticadd = tk.Label(athleatwind, width=20, fg='blue', text = "Automatic add athleats", relief="ridge", anchor="w")
         automaticadd.grid(row=0, column=0)
 
         choosefilebutton = tk.Button(athleatwind, text="Choose file", command= lambda: athlete.choosefilebutton_clicked(mylst))
         choosefilebutton.grid(row=1, column=0)
 
-        myfilentry = tk.Entry(athleatwind, bd = 5, width=40)
+        myfilentry = tk.Entry(athleatwind, bd = 5, width=50)
         myfilentry.grid(row=1, column=1)
 
         savebutton = tk.Button(athleatwind, text="Save", command= lambda: athlete.saveathleatbutton_clicked(mylst))
