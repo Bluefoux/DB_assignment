@@ -18,6 +18,7 @@ consider making a class for most of this (its starting to get messy)
 def myui():
     compobjlst = []
     wind = tk.Tk()
+    wind.title("Competition list")
 
     Create_compbutton = tk.Button(wind, text="Create new competition", command= lambda: gui.guiclass.Create_comp_button_clicked())
     Create_compbutton.grid(row=0, column=0)

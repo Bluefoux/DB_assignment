@@ -19,6 +19,7 @@ class guiclass:
     
     def Create_comp_button_clicked():
         create_compwind = tk.Tk()
+        create_compwind.title("Create new competition")
         mytup = ("Name", "Start Date", "End Date", "Venue", "Organizer", "Number of lanes", "Pool length", "Individual fee", "Relay fee")
         mylst = []
         i=1
@@ -54,6 +55,7 @@ class guiclass:
     def programbuttonclick(compobj):
         progwind = tk.Tk()
         eventobjlst = []
+        progwind.title("Program")
 
         addeventbutton = tk.Button(progwind, text="Add new event", command= lambda: guiclass.addeventbuttonclick(compobj))
         addeventbutton.grid(row=0, column=0)

@@ -1,7 +1,9 @@
 import tkinter as tk
 from sqlclass import sqlting
+from athleat import athlete
 
 class startlstclass:
+
     def startlstbuttonclick(eventobj):
         sqlclassobj = sqlting()
         sqlclassobj.connect()
@@ -17,6 +19,10 @@ class startlstclass:
         sqlclassobj.close()
 
         startwindow = tk.Tk()
+        startwindow.title("Start list")
+
+        addeventbutton = tk.Button(startwindow, text="Add athleat", command= lambda: athlete.addathleatbuttonclick(eventobj))
+        addeventbutton.grid(row=0, column=0)
 
         i = 1
         for x in startlst:
@@ -52,6 +58,7 @@ class startlstclass:
         sqlclassobj.close()
 
         heatwindow = tk.Tk()
+        heatwindow.title("Heat list")  
 
         i = 1
         for x in startlst:
