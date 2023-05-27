@@ -10,7 +10,7 @@ import mysql.connector
 from sqlclass import sqlting
 
 class event:
-    def __init__(self, id, competitionid, eventnumber, eventname, distance, gender, maxage, qualifyingtime, relay):
+    def __init__(self, id=None, competitionid=None, eventnumber=None, eventname=None, distance=None, gender=None, maxage=None, qualifyingtime=None, relay=None):
         self.id = id
         self.competitionid = competitionid
         self.eventnumber = eventnumber

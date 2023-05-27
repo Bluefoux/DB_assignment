@@ -5,7 +5,7 @@ import event as event
 
 class startlstclass:
 
-    def startlstbuttonclick(eventobj):
+    def startlstbutton_clicked(eventobj):
         sqlclassobj = sqlting()
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
@@ -22,7 +22,7 @@ class startlstclass:
         startwindow = tk.Tk()
         startwindow.title("Start list")
 
-        addeventbutton = tk.Button(startwindow, text="Add athleat", command= lambda: startlstclass.addathleatbuttonclick(eventobj))
+        addeventbutton = tk.Button(startwindow, text="Add athleat", command= lambda: startlstclass.addathleatbutton_click(eventobj))
         addeventbutton.grid(row=0, column=0)
 
         i = 1
@@ -43,7 +43,7 @@ class startlstclass:
         startwindow.mainloop()
         print("Show start list!")
 
-    def heatlstbuttonclick(eventobj):
+    def heatlstbutton_clicked(eventobj):
         sqlclassobj = sqlting()
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
@@ -79,7 +79,7 @@ class startlstclass:
         heatwindow.mainloop()
         print("Show start list!")
 
-    def choosefilebutton_clicked(mylst):
+    def choosefilebutton_clicked(mylst): #fix this in the future
         #open file dialog (utforskaren) and choose file
         print("Choose file button was clicked!")
 
@@ -88,17 +88,16 @@ class startlstclass:
         #athobj.save() #uncomment this when change is wanted in database
         print("Save button was clicked!") #return athobj?
 
-    def savefromfilebutton_clicked(mylst):
-        
-        print("Save button was clicked!")
+    def savefromfilebutton_clicked(mylst): #fix this in the future
+        print("Save from file button was clicked!")
 
-    def addathleatbuttonclick(eventobj):
+    def addathleatbutton_click(eventobj):
         mytup = ("Name", "Last Name", "Team", "Gender", "Age", "Registration Time")
         mylst = []
         athleatwind = tk.Tk()
         athleatwind.title("Add Athleat")
 
-        automaticadd = tk.Label(athleatwind, width=20, fg='blue', text = "Automatic add athleats", relief="ridge", anchor="w")
+        automaticadd = tk.Label(athleatwind, width=20, text = "Automatic add athleats", relief="ridge", anchor="w")
         automaticadd.grid(row=0, column=0)
 
         choosefilebutton = tk.Button(athleatwind, text="Choose file", command= lambda: startlstclass.choosefilebutton_clicked(mylst))
@@ -110,12 +109,12 @@ class startlstclass:
         savebutton = tk.Button(athleatwind, text="Save", command= lambda: startlstclass.savefromfilebutton_clicked(mylst))
         savebutton.grid(row=2, column=1)
 
-        automaticadd = tk.Label(athleatwind, width=20, fg='blue', text = "Add athleats manually", relief="ridge", anchor="w")
+        automaticadd = tk.Label(athleatwind, width=20, text = "Add athleats manually", relief="ridge", anchor="w")
         automaticadd.grid(row=4, column=0)
         
         i=5
         for x in mytup:
-            e = tk.Label(athleatwind, width=20, fg='blue', text = x, relief="ridge", anchor="w")
+            e = tk.Label(athleatwind, width=20, text = x, relief="ridge", anchor="w")
             e.grid(row=i, column=0)
             myentry = tk.Entry(athleatwind, bd = 5)
             myentry.grid(row=i, column=1)
