@@ -47,51 +47,9 @@ class athlete:
         sqlclassobj.close()
         return 0
     
-    def choosefilebutton_clicked(mylst):
-        #open file dialog (utforskaren) and choose file
-        print("Choose file button was clicked!")
+    
 
-    def saveathleatbutton_clicked(mylst):
-        print("Save button was clicked!")
-
-    def addathleatbuttonclick(eventobj):
-        mytup = ("Name", "Last Name", "Team", "Gender", "Age", "Registration Time")
-        mylst = []
-        athleatwind = tk.Tk()
-        athleatwind.title("Add Athleat")
-
-        automaticadd = tk.Label(athleatwind, width=20, fg='blue', text = "Automatic add athleats", relief="ridge", anchor="w")
-        automaticadd.grid(row=0, column=0)
-
-        choosefilebutton = tk.Button(athleatwind, text="Choose file", command= lambda: athlete.choosefilebutton_clicked(mylst))
-        choosefilebutton.grid(row=1, column=0)
-
-        myfilentry = tk.Entry(athleatwind, bd = 5, width=50)
-        myfilentry.grid(row=1, column=1)
-
-        savebutton = tk.Button(athleatwind, text="Save", command= lambda: athlete.saveathleatbutton_clicked(mylst))
-        savebutton.grid(row=2, column=1)
-
-        automaticadd = tk.Label(athleatwind, width=20, fg='blue', text = "Add athleats manually", relief="ridge", anchor="w")
-        automaticadd.grid(row=4, column=0)
-        
-        i=5
-        for x in mytup:
-            e = tk.Label(athleatwind, width=20, fg='blue', text = x, relief="ridge", anchor="w")
-            e.grid(row=i, column=0)
-            myentry = tk.Entry(athleatwind, bd = 5)
-            myentry.grid(row=i, column=1)
-            mylst.append(myentry)
-            i += 1
-        
-        #e = tk.Label(athleatwind, width=20, fg='blue', text = "Description", relief="ridge", anchor="w")
-        #e.grid(row=10, column=0)
-        #description = tk.Entry(athleatwind, bd = 5)
-        #description.grid(row=10, column=1)
-        saveathleatbutton = tk.Button(athleatwind, text="Save", command= lambda: athlete.saveathleatbutton_clicked(mylst))
-        saveathleatbutton.grid(row=i, column=1)
-        athleatwind.mainloop()
-        print("Add athleat to event!")
+    
 
     """def saveathleatsbutton_clicked(mylst, description):
         compname = comp.competition(mylst[0].get(), mylst[1].get(), mylst[2].get(), mylst[3].get(), mylst[4].get(), mylst[5].get(), mylst[6].get(), mylst[7].get(), mylst[8].get(), description.get())
