@@ -76,19 +76,27 @@ class competition:
         if(self.id == 0):
             query = "INSERT INTO COMPETITION (Name, StartDate, EndDate, CompetitionVenue, Organizer, NumberOfLanes, Length, IndividualStartFee, RelayStartFee, Description)"
             values = (self.name, self.StartDate, self.Enddate, self.CompetitionVenue, self.Organizer, self.NumberOfLanes, self.Length, self.IndividualStartFee, self.RelayStartFee, self.Description)
-            sqlclassobj.mycursor.execute(query, values)
-            sqlclassobj.mydb.commit()
-            sqlclassobj.close()
-            self.id = sqlclassobj.mycursor.lastrowid
-            return self.id
+            try:
+                sqlclassobj.mycursor.execute(query, values)
+                sqlclassobj.mydb.commit()
+                sqlclassobj.close()
+                self.id = sqlclassobj.mycursor.lastrowid
+                return self.id
+            except:
+                print("Could not insert competition")
+                return 0
         else:
             print("Competition already exists, update instead")
             query = "UPDATE COMPETITION SET Name = %s, StartDate = %s, EndDate = %s, CompetitionVenue = %s, Organizer = %s, NumberOfLanes = %s, Length = %s, IndividualStartFee = %s, RelayStartFee = %s, Description = %s WHERE ID = %s"
             values = (self.name, self.StartDate, self.Enddate, self.CompetitionVenue, self.Organizer, self.NumberOfLanes, self.Length, self.IndividualStartFee, self.RelayStartFee, self.Description, self.id)
-            sqlclassobj.mycursor.execute(query, values)
-            sqlclassobj.mydb.commit()
-            sqlclassobj.close()
-            return 0
+            try:
+                sqlclassobj.mycursor.execute(query, values)
+                sqlclassobj.mydb.commit()
+                sqlclassobj.close()
+                return 0
+            except:
+                print("Could not update competition")
+                return 0
     
     def getevents(self):
         sqlclassobj = sql.sqlting()
@@ -96,20 +104,21 @@ class competition:
         sqlclassobj.createdictcursor()
         query = "SELECT * FROM EVENT WHERE CompetitionID = %s"
         values = (self.id,)
-        #try:
-        sqlclassobj.mycursor.execute(query, values)
-        myresult = sqlclassobj.mycursor.fetchall()
-        sqlclassobj.close()
+        try:
+            sqlclassobj.mycursor.execute(query, values)
+            myresult = sqlclassobj.mycursor.fetchall()
+            sqlclassobj.close()
 
-        for row in myresult:
-            event_id = row['ID']
-            event_name = row['EventName']
-            # Add the event to the eventdict dictionary
-            self.eventdict[event_id] = event_name
-        return 1
-        #except:
-        #    print("No events found")
-        #    return 0
+            for row in myresult:
+                event_id = row['ID']
+                event_name = row['EventName']
+                # Add the event to the eventdict dictionary
+                self.eventdict[event_id] = event_name
+            return 1
+        except:
+            print("No events found")
+            sqlclassobj.close()
+            return 0
 
 
 

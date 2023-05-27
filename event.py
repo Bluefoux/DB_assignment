@@ -26,32 +26,47 @@ class event:
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
         if(self.id == 0):
-            query = "INSERT INTO EVENT (CompetitionID, EventNumber, EventName, Distance, Gender, MaxAge, QualifyingTime, Relay)"
-            values = (self.competitionid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay)
-            sqlclassobj.mycursor.execute(query, values)
-            sqlclassobj.mydb.commit()
-            self.id = sqlclassobj.mycursor.lastrowid
-            sqlclassobj.close()
-            return self.id
+            try:
+                query = "INSERT INTO EVENT (CompetitionID, EventNumber, EventName, Distance, Gender, MaxAge, QualifyingTime, Relay)"
+                values = (self.competitionid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay)
+                sqlclassobj.mycursor.execute(query, values)
+                sqlclassobj.mydb.commit()
+                self.id = sqlclassobj.mycursor.lastrowid
+                sqlclassobj.close()
+                return self.id
+            except:
+                print("Error when inserting event")
+                sqlclassobj.close()
+                return 0
         else:
             print("Event already exists, update instead")
-            query = "UPDATE EVENT SET CompetitionID = %s, EventNumber = %s, EventName = %s, Distance = %s, Gender = %s, MaxAge = %s, QualifyingTime = %s, Relay = %s WHERE ID = %s"
-            values = (self.competitionid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay, self.id)
-            sqlclassobj.mycursor.execute(query, values)
-            sqlclassobj.mydb.commit()
-            sqlclassobj.close()
-            return 0
+            try:
+                query = "UPDATE EVENT SET CompetitionID = %s, EventNumber = %s, EventName = %s, Distance = %s, Gender = %s, MaxAge = %s, QualifyingTime = %s, Relay = %s WHERE ID = %s"
+                values = (self.competitionid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay, self.id)
+                sqlclassobj.mycursor.execute(query, values)
+                sqlclassobj.mydb.commit()
+                sqlclassobj.close()
+                return 0
+            except:
+                print("Error when updating event")
+                sqlclassobj.close()
+                return 0
     
     def delete(self):
         sqlclassobj = sqlting()
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
-        query = "DELETE FROM EVENT WHERE CompetitionID = %s, ID = %d"
-        value = (self.competitionid, self.id)
-        sqlclassobj.mycursor.execute(query, value)
-        sqlclassobj.mydb.commit()
-        sqlclassobj.close()
-        return 0
+        try:
+            query = "DELETE FROM EVENT WHERE CompetitionID = %s, ID = %d"
+            value = (self.competitionid, self.id)
+            sqlclassobj.mycursor.execute(query, value)
+            sqlclassobj.mydb.commit()
+            sqlclassobj.close()
+            return 1
+        except:
+            print("Error when deleting event")
+            sqlclassobj.close()
+            return 0
 
     def getathleats():
         return 0

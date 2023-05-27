@@ -5,7 +5,7 @@ import event as event
 
 class startlstclass:
 
-    def startlstbutton_clicked(eventobj):
+    def startlstbutton_clicked(progwind, eventobj):
         sqlclassobj = sqlting()
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
@@ -19,10 +19,10 @@ class startlstclass:
             print("Error: Could not fetch data")
         sqlclassobj.close()
 
-        startwindow = tk.Tk()
+        startwindow = tk.Toplevel(progwind)
         startwindow.title("Start list")
 
-        addeventbutton = tk.Button(startwindow, text="Add athleat", command= lambda: startlstclass.addathleatbutton_click(eventobj))
+        addeventbutton = tk.Button(startwindow, text="Add athleat", command= lambda: startlstclass.addathleatbutton_click(progwind, eventobj))
         addeventbutton.grid(row=0, column=0)
 
         i = 1
@@ -43,7 +43,7 @@ class startlstclass:
         startwindow.mainloop()
         print("Show start list!")
 
-    def heatlstbutton_clicked(eventobj):
+    def heatlstbutton_clicked(progwind, eventobj):
         sqlclassobj = sqlting()
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
@@ -58,7 +58,7 @@ class startlstclass:
             print("Error: Could not fetch data")
         sqlclassobj.close()
 
-        heatwindow = tk.Tk()
+        heatwindow = tk.Toplevel(progwind)
         heatwindow.title("Heat list")  
 
         i = 1
@@ -91,10 +91,13 @@ class startlstclass:
     def savefromfilebutton_clicked(mylst): #fix this in the future
         print("Save from file button was clicked!")
 
-    def addathleatbutton_click(eventobj):
+    def on_close_addathleat(wind, athleatwind):
+        print("Add athleat window was closed!")
+
+    def addathleatbutton_click(progwind, eventobj):
         mytup = ("Name", "Last Name", "Team", "Gender", "Age", "Registration Time")
         mylst = []
-        athleatwind = tk.Tk()
+        athleatwind = tk.Toplevel(progwind)
         athleatwind.title("Add Athleat")
 
         automaticadd = tk.Label(athleatwind, width=20, text = "Automatic add athleats", relief="ridge", anchor="w")
@@ -123,5 +126,22 @@ class startlstclass:
         
         saveathleatbutton = tk.Button(athleatwind, text="Save", command= lambda: startlstclass.saveathleatbutton_clicked(mylst))
         saveathleatbutton.grid(row=i, column=1)
+        athleatwind.protocol("WM_DELETE_WINDOW", lambda: startlstclass.on_close_addathleat(progwind, athleatwind))
+
         athleatwind.mainloop()
         print("Add athleat to event!")
+
+    def editloop_returnrow(mywind, myobj, mylst, mytup, startrow):
+        nonvalid_attr = ("id", "eventid", "competitionid", "statusid", "statusid", "eventdict", "Description")
+        k=0
+        for attr, value in vars(myobj).items():
+            if attr not in nonvalid_attr:
+                e = tk.Label(mywind, width=20, fg='blue', text = mytup[k], relief="ridge", anchor="w")
+                e.grid(row=startrow, column=0)
+                myentry = tk.Entry(mywind, bd = 5)
+                myentry.insert(0, value)
+                myentry.grid(row=startrow, column=1)
+                mylst.append(myentry)
+                startrow += 1
+                k += 1
+        return startrow

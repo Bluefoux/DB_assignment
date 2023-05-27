@@ -1,7 +1,8 @@
-import creategui as cg
+#import creategui as cg
+from creategui import myguiclass as mgc
 
 def main():
-    cg.myui()
+    mgc.myui()
 
 
 if __name__ == "__main__":
