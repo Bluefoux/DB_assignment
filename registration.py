@@ -16,7 +16,7 @@ class registration:
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
         if(self.id == 0):
-            query = "INSERT INTO REGISTRATIONS (CompetitionID, EventNumber, Name, LastName, Team, Age, RegistrationTime)"
+            query = "INSERT INTO REGISTRATIONS (CompetitionID, EventNumber, RegName, LastName, Team, Age, RegistrationTime)"
             values = (self.competitionid, self.eventnumber, self.name, self.lastname, self.teamname, self.age, self.registrationtime)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()
@@ -25,7 +25,7 @@ class registration:
             return self.id
         else:
             print("Registration already exists, update instead")
-            query = "UPDATE REGISTRATIONS SET CompetitionID = %s, EventNumber = %s, Name = %s, LastName = %s, Team = %s, Age = %s, RegistrationTime = %s WHERE ID = %s"
+            query = "UPDATE REGISTRATIONS SET CompetitionID = %s, EventNumber = %s, RegName = %s, LastName = %s, Team = %s, Age = %s, RegistrationTime = %s WHERE ID = %s"
             values = (self.competitionid, self.eventnumber, self.name, self.lastname, self.teamname, self.age, self.registrationtime, self.id)
             sqlclassobj.mycursor.execute(query, values)
             sqlclassobj.mydb.commit()

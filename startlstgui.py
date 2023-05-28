@@ -9,7 +9,7 @@ class startlstclass:
         sqlclassobj = sqlting()
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
-        query = "SELECT Name, Lastname, TeamName, RegistrationTime FROM ATHLEATS INNER JOIN EVENT ON ATHLEATS.EventID = EVENT.ID AND EVENT.CompetitionID = %s AND ATHLEATS.EventID = %s ORDER BY RegistrationTime ASC"
+        query = "SELECT AthleatName, Lastname, TeamName, RegistrationTime FROM ATHLEATS INNER JOIN EVENT ON ATHLEATS.EventID = EVENT.ID AND EVENT.CompetitionID = %s AND ATHLEATS.EventID = %s ORDER BY RegistrationTime ASC"
         values = (eventobj.competitionid, eventobj.id)
         print(values)
         try:
@@ -131,17 +131,6 @@ class startlstclass:
         athleatwind.mainloop()
         print("Add athleat to event!")
 
-    def editloop_returnrow(mywind, myobj, mylst, mytup, startrow):
-        nonvalid_attr = ("id", "eventid", "competitionid", "statusid", "statusid", "eventdict", "Description")
-        k=0
-        for attr, value in vars(myobj).items():
-            if attr not in nonvalid_attr:
-                e = tk.Label(mywind, width=20, fg='blue', text = mytup[k], relief="ridge", anchor="w")
-                e.grid(row=startrow, column=0)
-                myentry = tk.Entry(mywind, bd = 5)
-                myentry.insert(0, value)
-                myentry.grid(row=startrow, column=1)
-                mylst.append(myentry)
-                startrow += 1
-                k += 1
-        return startrow
+    #def editloop_returnrow(mywind, myobj, mylst, mytup, startrow):
+        
+    #    return startrow

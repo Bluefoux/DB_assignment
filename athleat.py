@@ -20,8 +20,8 @@ class athlete:
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
         if(self.id == 0):
-            query = "INSERT INTO ATHLEATS (StatusID, EventID, Name, LastName, TeamName, Gender, Age, Heat, Lane, RegistrationTime, ResultTime)"
-            values = (self.statusid, self.eventid, self.name, self.lastname, self.teamname, self.age, self.registrationtime, self.resulttime)
+            query = "INSERT INTO ATHLEATS (StatusID, EventID, AthleatName, LastName, TeamName, Gender, Age, RegistrationTime, ResultTime)"
+            values = (self.statusid, self.eventid, self.name, self.lastname, self.teamname, self.gender, self.age, self.registrationtime, self.resulttime)
             try:
                 sqlclassobj.mycursor.execute(query, values)
                 sqlclassobj.mydb.commit()
@@ -34,8 +34,8 @@ class athlete:
                 return 0
         else:
             print("Event already exists, update instead")
-            query = "UPDATE ATHLEATS SET StatusID = %s, EventID = %s, Name = %s, LastName = %s, TeamName = %s, Age = %s, RegistrationTime = %s, ResultTime = %s WHERE ID = %s"
-            values = (self.statusid, self.eventid, self.name, self.lastname, self.teamname, self.age, self.registrationtime, self.resulttime, self.id)
+            query = "UPDATE ATHLEATS SET StatusID = %s, EventID = %s, AthleatName = %s, LastName = %s, TeamName = %s, Gender = %s, Age = %s, RegistrationTime = %s, ResultTime = %s WHERE ID = %s"
+            values = (self.statusid, self.eventid, self.name, self.lastname, self.teamname, self.gender, self.age, self.registrationtime, self.resulttime, self.id)
             try:
                 sqlclassobj.mycursor.execute(query, values)
                 sqlclassobj.mydb.commit()

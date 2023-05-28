@@ -41,7 +41,7 @@ class myguiclass:
             return None
         
         for m in myresult:
-            compobjlst.append(comp.competition(name=m["Name"], StartDate=m["StartDate"], Enddate=m["EndDate"], CompetitionVenue=m["CompetitionVenue"], Organizer=m["Organizer"], NumberOfLanes=m["NumberOfLanes"], Length=m["Length"], IndividualStartFee=m["IndividualStartFee"], RelayStartFee=m["RelayStartFee"], Description=m["Description"], id=m["ID"]))
+            compobjlst.append(comp.competition(name=m["CompName"], StartDate=m["StartDate"], Enddate=m["EndDate"], CompetitionVenue=m["CompetitionVenue"], Organizer=m["Organizer"], NumberOfLanes=m["NumberOfLanes"], Length=m["Length"], IndividualStartFee=m["IndividualStartFee"], RelayStartFee=m["RelayStartFee"], Description=m["Description"], id=m["ID"]))
         
         #for i in range(len(compobjlst)):
         #    print(compobjlst[i].id)
@@ -61,7 +61,7 @@ class myguiclass:
                 i += 1
 
             for key, value in x.items():
-                if key == "Name":
+                if key == "CompName":
                     e = tk.Button(wind, width=20, text = x[key], relief="ridge", anchor="w")
                     e.grid(row=i, column=y)
                 else:
@@ -100,8 +100,21 @@ class myguiclass:
         mytup = ("Name", "Start Date", "End Date", "Venue", "Organizer", "Number of lanes", "Pool length", "Individual fee", "Relay fee")
         mylst = []
         #i=1
-        i = startlst.startlstclass.editloop_returnrow(edit_compwind, compobj, mylst, mytup, 1)
-
+        #i = startlst.startlstclass.editloop_returnrow(edit_compwind, compobj, mylst, mytup, 1)
+        #nonvalid_attr = ("id", "eventid", "competitionid", "statusid", "statusid", "eventdict", "Description")
+        #name=None, StartDate=None, Enddate=None, CompetitionVenue=None, Organizer=None, NumberOfLanes=None, Length=None, IndividualStartFee=None, RelayStartFee=None, Eventdict=None ,Description=None, id=None
+        valid_attr = ("name", "StartDate", "Enddate", "CompetitionVenue", "Organizer", "NumberOfLanes", "Length", "IndividualStartFee", "RelayStartFee")
+        i=1
+        for attr, value in vars(compobj).items():
+            if attr in valid_attr:
+                e = tk.Label(edit_compwind, width=20, fg='blue', text = mytup[i-1], relief="ridge", anchor="w")
+                e.grid(row=i, column=0)
+                myentry = tk.Entry(edit_compwind, bd = 5)
+                myentry.insert(0, value)
+                myentry.grid(row=i, column=1)
+                mylst.append(myentry)
+                i += 1
+        
         e = tk.Label(edit_compwind, width=20, fg='blue', text = "Description", relief="ridge", anchor="w")
         e.grid(row=i, column=0)
         description = tk.Entry(edit_compwind, bd = 5)
@@ -145,7 +158,7 @@ class myguiclass:
         #print("Button was clicked!")
 
     def savecompbutton_clicked(compobj, mylst, description):
-        valid_attr = ("name", "StartDate", "Enddate", "CompetitionVenue", "Organizer", "NumberOfLanes", "Length", "IndividualStartFee", "RelayStartFee")
+        valid_attr = ("CompName", "StartDate", "Enddate", "CompetitionVenue", "Organizer", "NumberOfLanes", "Length", "IndividualStartFee", "RelayStartFee")
         i=0
         #print(len(vars(compobj).items()))
         #print(len(mylst))

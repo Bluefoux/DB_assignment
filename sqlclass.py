@@ -12,7 +12,8 @@ class sqlting:
                 host="127.0.0.1",
                 user="root",
                 password="fille2001",
-                database="mydb"
+                database="mydb",
+                charset="utf8mb4"
             )
             return 1
         except:
@@ -27,8 +28,29 @@ class sqlting:
             print("Could not create cursor")
             return 0
         
-    #def check_forweirdletters(self, myobj):
-    #    return 1
+    def check_forweirdletters(self):
+        thisissql = sqlting()
+        thisissql.connect()
+        thisissql.createdictcursor()
+        query = """
+            SELECT COLUMN_NAME, CHARACTER_SET_NAME, COLLATION_NAME
+            FROM information_schema.columns
+            WHERE TABLE_SCHEMA = 'mydb'  -- Replace with your database name
+                AND TABLE_NAME = 'COMPETITION'  -- Replace with your table name
+                AND COLUMN_NAME = 'CompName'  -- Replace with your column name
+        """
+        thisissql.mycursor.execute(query)
+        result = thisissql.mycursor.fetchone()
+        if result:
+            column_name, character_set_name, collation_name = result
+            print(f"Column: {column_name}")
+            print(f"Character Set: {character_set_name}")
+            print(f"Collation: {collation_name}")
+        else:
+            print("Column not found.")
+        thisissql.mycursor.close()
+        thisissql.mydb.close()
+        return 1
     
     def close(self):
         try:
