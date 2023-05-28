@@ -4,33 +4,41 @@ SHOW DATABASES;
 USE mydb;
 
 CREATE TABLE COMPETITION (
-ID int NOT NULL auto_increment,
-Name varchar(50), 
-StartDate date, 
-EndDate date,
-CompetitionVenue varchar(100),
-Organizer varchar(100),
-NumberOfLanes bit(8),
-Length tinyint(50),
-IndividualStartFee int,
-RelayStartFee int,
-Description varchar(400),
+ID int NOT NULL AUTO_INCREMENT,
+CompName VARCHAR(255), 
+StartDate DATE, 
+EndDate DATE,
+CompetitionVenue VARCHAR(100),
+Organizer VARCHAR(100),
+NumberOfLanes INT,
+Length INT,
+IndividualStartFee INT,
+RelayStartFee INT,
+Description VARCHAR(400),
 primary key(ID)
 );
 
 CREATE TABLE STATUS (
-ID int NOT NULL auto_increment,
-primary key (ID),
-StatusText varchar(50)
+ID int NOT NULL AUTO_INCREMENT,
+StatusText varchar(50),
+primary key (ID)
+);
+
+CREATE TABLE tblRankToLine (
+	ID INT AUTO_INCREMENT,
+	Size INT,
+    MyRank INT,
+	Line INT,
+	primary key (ID)
 );
 
 CREATE TABLE REGISTRATIONS (
-ID int NOT NULL auto_increment,
+ID int NOT NULL AUTO_INCREMENT,
 CompetitionID int,
 EventNumber int, 
-Name varchar(50), 
-LastName varchar(50), 
-Team varchar(50), 
+RegName VARCHAR(50), 
+LastName VARCHAR(50), 
+Team VARCHAR(50), 
 Age int,
 RegistrationTime time,
 primary key (ID)
@@ -40,9 +48,9 @@ CREATE TABLE EVENT (
 ID int NOT NULL auto_increment,
 CompetitionID int,
 EventNumber int, 
-EventName varchar(100), 
+EventName VARCHAR(100), 
 Distance int,
-Gender varchar(45),
+Gender VARCHAR(45),
 MaxAge INT,
 QualifyingTime time,
 Relay bit(3),
@@ -54,9 +62,10 @@ CREATE TABLE ATHLEATS (
 ID int NOT NULL auto_increment,
 StatusID int,
 EventID int,
-Name VARCHAR(50),
-LastName varchar(50), 
-TeamName varchar(50), 
+AthleatName VARCHAR(50),
+LastName VARCHAR(50), 
+TeamName VARCHAR(50), 
+Gender VARCHAR(50),
 Age int,
 Heat int,
 Lane int,
@@ -67,9 +76,13 @@ foreign key (StatusID) references STATUS(ID),
 foreign key (EventID) references EVENT(ID)
 );
 
+SELECT * FROM EVENT WHERE CompetitionID = 6;
+
 SELECT * FROM Competition;
 SELECT * FROM EVENT
 WHERE CompetitionID = 3;
+
+SET NAMES utf8mb4;
 
 SET GLOBAL local_infile=1;
 

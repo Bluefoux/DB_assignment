@@ -3,7 +3,7 @@ SHOW DATABASES;
 USE mydb;
 
 -- ADD VALUES TO Competition
-INSERT INTO Competition (Name, StartDate, EndDate, CompetitionVenue, Organizer, NumberOfLanes, Length, IndividualStartFee, RelayStartFee, Description)
+INSERT INTO Competition (CompName, StartDate, EndDate, CompetitionVenue, Organizer, NumberOfLanes, Length, IndividualStartFee, RelayStartFee, Description)
 VALUES ROW('Vårsimiaden','2023-05-19','2023-05-20','Staffanstorp','Triton',8,25,100,200,'Deltävling1'),
 ROW('Vårsimiaden','2023-05-19','2023-05-20','Kristianstad','KSLS',8,25,100,200,'Deltävling2'),
 ROW('Vårsimiaden','2023-05-19','2023-05-20','Malmö','MKK',8,25,100,200,'Deltävling3'),
@@ -60,7 +60,7 @@ ROW(10,8,'100m Medley Mixed Final',100,'M',12,'',0),
 ROW(10,9,'4x100m Medley Mixed 11-12 år Final',400,'X',12,'',1);
 
 -- ADD VALUES TO REGISTRATIONS
-INSERT INTO REGISTRATIONS (CompetitionID,EventNumber,Name,LastName,Team,Age,RegistrationTime)
+INSERT INTO REGISTRATIONS (CompetitionID,EventNumber,RegName,LastName,Team,Age,RegistrationTime)
 VALUES
 ROW(6,3,'Isabelle ','Trajkovsk','Simklubben Ran',2011,'1:11.18'),
 ROW(6,3,'Folke ','af Tramp','Simklubben Poseidon',2011,'1:12.74'),
@@ -237,6 +237,24 @@ ROW(7,5,'Isabel ','Poulse','Helsingborgs Simsällskap',2012,''),
 ROW(7,5,'Lewisia ','Liena','Ystads Simsällskap',2012,''),
 ROW(7,5,'Channelle ','Lundber','Simsällskapet Delfin',2012,''),
 ROW(7,5,'Majken ','Brommesso','Kristianstads SLS',2012,'');
+
+INSERT INTO tblRankToLine (Size, MyRank, Line)
+VALUES
+(8, 1, 4),
+(8, 2, 5),
+(8, 3, 3),
+(8, 4, 6),
+(8, 5, 2),
+(8, 6, 7),
+(8, 7, 1),
+(8, 8, 8),
+(7, 1, 4),
+(7, 2, 5),
+(7, 3, 3),
+(7, 4, 6),
+(7, 5, 2),
+(7, 6, 7),
+(7, 7, 1);
 
 -- Insert values into status
 INSERT INTO STATUS (StatusText)

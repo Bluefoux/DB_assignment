@@ -1,7 +1,6 @@
 -- Procedures and Triggers
 -- StoreProcedure import registrations to Athleats
 DROP PROCEDURE IF EXISTS SP_ImportRegistration;
-
 DELIMITER ;;
 CREATE PROCEDURE SP_ImportRegistration()
 BEGIN
@@ -9,7 +8,7 @@ DECLARE done INT DEFAULT FALSE;
 DECLARE compid, eventnum, aage, eventidto INT;
 DECLARE aName, aLastName, aTeam VARCHAR(50);
 DECLARE aRegistrationTime TIME;
-DECLARE CurRegistration CURSOR FOR SELECT CompetitionID,EventNumber,Age,Name,LastName,Team,RegistrationTime FROM Registrations;
+DECLARE CurRegistration CURSOR FOR SELECT CompetitionID,EventNumber,Age,RegName,LastName,Team,RegistrationTime FROM Registrations;
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
 OPEN CurRegistration;
@@ -20,7 +19,7 @@ myloop: LOOP
 	END IF;
     
     SET eventidto = (select EVENT.ID FROM EVENT WHERE EVENT.CompetitionID = compid AND EVENT.EventNumber = eventnum LIMIT 1);
-    INSERT INTO ATHLEATS (EventID, Name, LastName, TeamName, Age, RegistrationTime)
+    INSERT INTO ATHLEATS (EventID, AthleatName, LastName, TeamName, Age, RegistrationTime)
     VALUES (eventidto, aName, aLastName, aTeam, aage, aRegistrationTime);
 -- SELECT compid, eventnum, aage, aName, aLastName, aTeam, aRegistrationTime;
 END LOOP;
@@ -34,7 +33,9 @@ DELIMITER ;;
 CREATE PROCEDURE SP_GetInvoice(compid INT)
 BEGIN
 DECLARE sum_invoice INT DEFAULT 0;
-SELECT 100*COUNT(ATHLEATS.ID) AS Invoice
+DECLARE invoiceperathleat INT DEFAULT 0;
+SET invoiceperathleat = (SELECT IndividualStartFee FROM COMPETITION WHERE ID = compid);
+SELECT ATHLEATS.TeamName, invoiceperathleat*COUNT(ATHLEATS.ID) AS InvoicePerEvent
 	FROM ATHLEATS
 	INNER JOIN EVENT
 	ON ATHLEATS.EventID = EVENT.ID
@@ -49,13 +50,27 @@ DROP PROCEDURE IF EXISTS Generate_StartList;
 DELIMITER ;;
 CREATE PROCEDURE Generate_StartList(compid INT, eventid INT)
 BEGIN
-DECLARE sum_invoice INT DEFAULT 0;
-SELECT Name, Lastname, TeamName, RegistrationTime
+SELECT AthleatName, Lastname, TeamName, RegistrationTime
 	FROM ATHLEATS
     INNER JOIN EVENT
 	ON ATHLEATS.EventID = EVENT.ID AND EVENT.CompetitionID = compid AND ATHLEATS.EventID = eventid
 	ORDER BY RegistrationTime ASC;
 End;
+;;
+
+-- Get the contestents lane (based on ranking)
+DROP FUNCTION IF EXISTS FN_RankToLine;
+DELIMITER ;;
+CREATE FUNCTION FN_RankToLine(Size INT, MyRank INT) 
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE LineVal INT;
+    SELECT Line INTO LineVal
+    FROM tblRankToLine
+    WHERE tblRankToLine.Size = Size AND tblRankToLine.MyRank= MyRank;
+    RETURN LineVal;
+END;
 ;;
 
 DROP PROCEDURE IF EXISTS Generate_Heatlist;
@@ -85,8 +100,8 @@ SET num_of_heats = (SELECT CEILING(num_of_athleats / num_of_lanes));
 OPEN Cursorathleats;
 heatloop: LOOP    
     SET current_heat = (num_of_heats - (current_rank DIV num_of_lanes));
-    -- SET current_lane = 1 + MOD(current_rank, num_of_lanes);
-    SET current_lane = FN_RankToLine(num_of_lanes, current_rank);
+    SET current_lane = 1 + MOD(current_rank, num_of_lanes);
+    SET current_lane = FN_RankToLine(num_of_lanes, current_lane);
 	FETCH Cursorathleats INTO athleatID;
     IF done THEN
 		LEAVE heatloop;
@@ -101,12 +116,6 @@ CLOSE Cursorathleats;
 End;
 ;;
 
--- DROP FUNCITON IF EXISTS FN_Calec_Lane;
--- DELIMITER ;;
--- CREATE FUNCITON FN_Calec_Lane(heatrank INT)
--- RETURNS INT 
-
--- SELECT MOD(num_of_lanes, num_of_athleats);
 -- delete event trigger (delete all athleats with eventid)
 DELIMITER ;;
 CREATE TRIGGER del_event BEFORE DELETE ON EVENT
@@ -128,6 +137,14 @@ END;
 ;;
 
 
+-- call procedure
+CALL SP_ImportRegistration();
+CALL SP_GetInvoice(6);
+CALL Generate_StartList(6, 3);
+CALL Generate_Heatlist(6, 3);
+
+
+SELECT * FROM ATHLEATS;
 SELECT * FROM REGISTRATIONS;
 SELECT * FROM EVENT;
 SELECT * FROM ATHLEATS WHERE EventID = 48 ORDER BY Heat, Lane;
@@ -155,12 +172,6 @@ SELECT * FROM ATHLEATS;
 DELETE FROM EVENT
 WHERE ID = 4;
 
--- call procedure
-CALL SP_ImportRegistration();
-CALL SP_GetInvoice(6);
-CALL Generate_StartList(6, 48);
-CALL Generate_Heatlist(6, 48);
-
 -- Select to check table
 SELECT * FROM ATHLEATS;
 SELECT * FROM COMPETITION;
@@ -175,21 +186,3 @@ ORDER BY EVENT.CompetitionID, ATHLEATS.TeamName;
 
 SELECT * FROM ATHLEATS
 ORDER BY EventID;
-
-
--- Simple While Loop procedure
-DROP PROCEDURE IF EXISTS loopproc;
-DELIMITER ;;
-
-CREATE PROCEDURE loopproc()
-BEGIN
-DECLARE n INT DEFAULT 0;
-DECLARE i INT DEFAULT 0;
-SELECT COUNT(*) FROM ATHLEATS INTO n;
-SET i=0;
-WHILE i<n DO
-	-- loop here
-    SET i = i+1;
-END WHILE;
-End;
-;;
