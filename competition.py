@@ -74,10 +74,10 @@ class competition:
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
         if(self.id == 0):
-            query = "INSERT INTO COMPETITION (Name, StartDate, EndDate, CompetitionVenue, Organizer, NumberOfLanes, Length, IndividualStartFee, RelayStartFee, Description)"
-            values = (self.name, self.StartDate, self.Enddate, self.CompetitionVenue, self.Organizer, self.NumberOfLanes, self.Length, self.IndividualStartFee, self.RelayStartFee, self.Description)
+            queryinsert = "INSERT INTO COMPETITION (Name, StartDate, EndDate, CompetitionVenue, Organizer, NumberOfLanes, Length, IndividualStartFee, RelayStartFee, Description)"
+            valuesinsert = (self.name, self.StartDate, self.Enddate, self.CompetitionVenue, self.Organizer, self.NumberOfLanes, self.Length, self.IndividualStartFee, self.RelayStartFee, self.Description)
             try:
-                sqlclassobj.mycursor.execute(query, values)
+                sqlclassobj.mycursor.execute(queryinsert, valuesinsert)
                 sqlclassobj.mydb.commit()
                 sqlclassobj.close()
                 self.id = sqlclassobj.mycursor.lastrowid
@@ -87,16 +87,16 @@ class competition:
                 return 0
         else:
             print("Competition already exists, update instead")
-            query = "UPDATE COMPETITION SET Name = %s, StartDate = %s, EndDate = %s, CompetitionVenue = %s, Organizer = %s, NumberOfLanes = %s, Length = %s, IndividualStartFee = %s, RelayStartFee = %s, Description = %s WHERE ID = %s"
-            values = (self.name, self.StartDate, self.Enddate, self.CompetitionVenue, self.Organizer, self.NumberOfLanes, self.Length, self.IndividualStartFee, self.RelayStartFee, self.Description, self.id)
-            try:
-                sqlclassobj.mycursor.execute(query, values)
-                sqlclassobj.mydb.commit()
-                sqlclassobj.close()
-                return 0
-            except:
-                print("Could not update competition")
-                return 0
+            queryupdate = "UPDATE COMPETITION SET Name = %s, StartDate = %s, EndDate = %s, CompetitionVenue = %s, Organizer = %s, NumberOfLanes = %s, Length = %s, IndividualStartFee = %s, RelayStartFee = %s, Description = %s WHERE ID = %s"
+            valuesupdate = (self.name, self.StartDate, self.Enddate, self.CompetitionVenue, self.Organizer, self.NumberOfLanes, self.Length, self.IndividualStartFee, self.RelayStartFee, self.Description, self.id)
+            #try:
+            sqlclassobj.mycursor.execute(queryupdate, valuesupdate)
+            sqlclassobj.mydb.commit()
+            sqlclassobj.close()
+            return 0
+            #except:
+            #    print("Could not update competition")
+            #    return 0
     
     def getevents(self):
         sqlclassobj = sql.sqlting()

@@ -26,6 +26,9 @@ class sqlting:
         except:
             print("Could not create cursor")
             return 0
+        
+    #def check_forweirdletters(self, myobj):
+    #    return 1
     
     def close(self):
         try:
