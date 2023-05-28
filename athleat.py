@@ -27,7 +27,7 @@ class athlete:
                 sqlclassobj.mydb.commit()
                 sqlclassobj.close()
                 self.id = sqlclassobj.mycursor.lastrowid
-                return self.id
+                return 1
             except:
                 print("Error in saving athleat")
                 sqlclassobj.close()

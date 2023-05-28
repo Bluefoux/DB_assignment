@@ -185,7 +185,5 @@ class myguiclass:
                 setattr(compobj, attr, mylst[i].get())
                 i += 1
         setattr(compobj, "Description", description.get())
-        #compname = compobj(name=mylst[0].get(), StartDate=mylst[1].get(), Enddate=mylst[2].get(), CompetitionVenue=mylst[3].get(), Organizer=mylst[4].get(), NumberOfLanes=mylst[5].get(), Length=mylst[6].get(), IndividualStartFee=mylst[7].get(), RelayStartFee=mylst[8].get(), Description=description.get())
+        
         compobj.save()
-        #compobjlst.append(compname) #dont think i need this
-        #print("Save button was clicked!")
