@@ -5,7 +5,7 @@ import event as event
 
 class startlstclass:
 
-    def startlstbutton_clicked(progwind, eventobj):
+    def startlst_layout(startwindow, eventobj):
         sqlclassobj = sqlting()
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
@@ -19,10 +19,7 @@ class startlstclass:
             print("Error: Could not fetch data")
         sqlclassobj.close()
 
-        startwindow = tk.Toplevel(progwind)
-        startwindow.title("Start list")
-
-        addeventbutton = tk.Button(startwindow, text="Add athleat", command= lambda: startlstclass.addathleatbutton_click(progwind, eventobj))
+        addeventbutton = tk.Button(startwindow, text="Add athleat", command= lambda: startlstclass.addathleatbutton_click(startwindow, eventobj))
         addeventbutton.grid(row=0, column=0)
 
         i = 1
@@ -40,22 +37,30 @@ class startlstclass:
                 e.grid(row=i, column=y)
                 y += 1
             i += 1
+
+    def startlstbutton_clicked(progwind, eventobj):
+        
+        startwindow = tk.Toplevel(progwind)
+        startwindow.title("Start list")
+
+        startlstclass.startlst_layout(startwindow, eventobj)
+        
         startwindow.mainloop()
-        #print("Show start list!")
 
     def heatlstbutton_clicked(progwind, eventobj):
         sqlclassobj = sqlting()
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
+
+        myquery = "CALL Generate_Heatlist(%s, %s);"
+        myvalues = (eventobj.competitionid, eventobj.id)
+        sqlclassobj.mycursor.execute(myquery, myvalues)
         
-        query = "SELECT Name, Lastname, TeamName, Heat, Lane, RegistrationTime FROM ATHLEATS INNER JOIN EVENT ON ATHLEATS.EventID = EVENT.ID AND EVENT.CompetitionID = %s AND ATHLEATS.EventID = %s ORDER BY Heat, Lane ASC"
+        query = "SELECT AthleatName, Lastname, TeamName, Heat, Lane, RegistrationTime FROM ATHLEATS INNER JOIN EVENT ON ATHLEATS.EventID = EVENT.ID AND EVENT.CompetitionID = %s AND ATHLEATS.EventID = %s ORDER BY Heat, Lane ASC"
         values = (eventobj.competitionid, eventobj.id)
-        #print(values)
-        try:
-            sqlclassobj.mycursor.execute(query, values)
-            startlst = sqlclassobj.mycursor.fetchall()
-        except:
-            print("Error: Could not fetch data")
+
+        sqlclassobj.mycursor.execute(query, values)
+        startlst = sqlclassobj.mycursor.fetchall()
         sqlclassobj.close()
 
         heatwindow = tk.Toplevel(progwind)
@@ -77,22 +82,23 @@ class startlstclass:
                 y += 1
             i += 1
         heatwindow.mainloop()
-        #print("Show start list!")
 
     def choosefilebutton_clicked(mylst): #fix this in the future
         #open file dialog (utforskaren) and choose file
         print("Choose file button was clicked!")
 
-    def saveathleatbutton_clicked(mylst):
+    def saveathleatbutton_clicked(mylst): #fix this in the future by doing the same thing as in guiclass
         athobj = athlete(name=mylst[0].get(), lastname=mylst[1].get(), teamname=mylst[2].get(), gender=mylst[3].get(), age=mylst[4].get(), registrationtime=mylst[5].get())
-        #athobj.save() #uncomment this when change is wanted in database
+        athobj.save() #uncomment this when change is wanted in database
         print("Save button was clicked!")
 
     def savefromfilebutton_clicked(mylst): #fix this in the future
         print("Save from file button was clicked!")
 
-    def on_close_addathleat(wind, athleatwind):
-        print("Add athleat window was closed!")
+    def on_close_addathleat(wind, athleatwind, eventobj):
+        startlstclass.startlst_layout(wind, eventobj)
+        wind.update()
+        athleatwind.destroy()
 
     def addathleatbutton_click(progwind, eventobj):
         mytup = ("Name", "Last Name", "Team", "Gender", "Age", "Registration Time")
@@ -126,8 +132,7 @@ class startlstclass:
         
         saveathleatbutton = tk.Button(athleatwind, text="Save", command= lambda: startlstclass.saveathleatbutton_clicked(mylst))
         saveathleatbutton.grid(row=i, column=1)
-        athleatwind.protocol("WM_DELETE_WINDOW", lambda: startlstclass.on_close_addathleat(progwind, athleatwind))
-
+        athleatwind.protocol("WM_DELETE_WINDOW", lambda: startlstclass.on_close_addathleat(progwind, athleatwind, eventobj))
         athleatwind.mainloop()
         #print("Add athleat to event!")
 

@@ -64,6 +64,17 @@ class myguiclass:
                     e = tk.Label(wind, width=20, fg='blue', text = x[key], relief="ridge", anchor="w")
                     e.grid(row=i, column=y)
                 y += 1
+
+            getinvoicebutton = tk.Button(
+                wind,
+                width=20,
+                text="Invoice",
+                command=lambda i=i: myguiclass.getinvoicebuttonclick(wind, compobjlst[i-2]),
+                relief="ridge",
+                anchor="w"
+            )
+            getinvoicebutton.grid(row=i, column=y)
+
             programbutton = tk.Button(
                 wind,
                 width=20,
@@ -72,17 +83,50 @@ class myguiclass:
                 relief="ridge",
                 anchor="w"
             )
-            programbutton.grid(row=i, column=y)
+            programbutton.grid(row=i, column=y+1)
 
             editcompbutton = tk.Button(
                 wind,
                 width=20,
-                text="edit/delete",
+                text="Edit/Delete",
                 command=lambda i=i: myguiclass.editcompbuttonclick(wind, compobjlst[i-2]),
                 relief="ridge",
                 anchor="w"
             )
-            editcompbutton.grid(row=i, column=y+1)
+            editcompbutton.grid(row=i, column=y+2)
+            i += 1
+
+    def getinvoicebuttonclick(wind, compobj):
+        get_invoicewind = tk.Toplevel(wind)
+        get_invoicewind.title("Invoice List")
+
+        sqlclassobj = sql.sqlting()
+        sqlclassobj.connect()
+        sqlclassobj.createdictcursor()
+        try:
+            query = "CALL SP_GetInvoice(%s)"
+            values = (compobj.id,)
+            sqlclassobj.mycursor.execute(query, values)
+            myresult = sqlclassobj.mycursor.fetchall()
+            sqlclassobj.close()
+        except:
+            print("No competitions found")
+            sqlclassobj.close()
+            return None
+        i = 1
+        for x in myresult:
+            y = 0
+            if i==1:
+                for k in x.keys():
+                    e = tk.Label(get_invoicewind, width=20, text = k, relief="ridge", anchor="w")
+                    e.grid(row=i, column=y)
+                    y += 1
+                i += 1
+                y = 0
+            for key, value in x.items():
+                e = tk.Label(get_invoicewind, width=20, fg='blue', text = x[key], relief="ridge", anchor="w")
+                e.grid(row=i, column=y)
+                y += 1
             i += 1
 
     def on_close_editcomp(wind, edit_compwind):

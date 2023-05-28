@@ -47,7 +47,7 @@ class guiclasstwo:
             progwind,
             width=20,
             text="Result list",
-            command=lambda i=i: guiclasstwo.resultbutton_clicked(progwind, eventobjlst[i-2]),
+            command=lambda i=i: guiclasstwo.resultbutton_clicked(eventobjlst[i-2]),
             relief="ridge",
             anchor="w"
         )
