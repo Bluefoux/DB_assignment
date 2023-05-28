@@ -41,7 +41,8 @@ class myguiclass:
             return None
         
         for m in myresult:
-            compobjlst.append(comp.competition(name=m["CompName"], StartDate=m["StartDate"], Enddate=m["EndDate"], CompetitionVenue=m["CompetitionVenue"], Organizer=m["Organizer"], NumberOfLanes=m["NumberOfLanes"], Length=m["Length"], IndividualStartFee=m["IndividualStartFee"], RelayStartFee=m["RelayStartFee"], Description=m["Description"], id=m["ID"]))
+            compobj = comp.competition(id=m['ID'], name=m['CompName'], StartDate=m['StartDate'], Enddate=m['EndDate'], CompetitionVenue=m['CompetitionVenue'], Organizer=m['Organizer'], NumberOfLanes=m['NumberOfLanes'], Length=m['Length'], IndividualStartFee=m['IndividualStartFee'], RelayStartFee=m['RelayStartFee'], Description=m['Description'])
+            compobjlst.append(compobj)
         
         #for i in range(len(compobjlst)):
         #    print(compobjlst[i].id)

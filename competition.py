@@ -76,8 +76,10 @@ class competition:
         sqlclassobj.check_forweirdletters()
         if(self.id == 0):
             queryinsert = "INSERT INTO COMPETITION (CompName, StartDate, EndDate, CompetitionVenue, Organizer, NumberOfLanes, Length, IndividualStartFee, RelayStartFee, Description)"
-            valuesinsert = (self.name, self.StartDate, self.Enddate, self.CompetitionVenue, self.Organizer, self.NumberOfLanes, self.Length, self.IndividualStartFee, self.RelayStartFee, self.Description)
+            valuesinsert = (str(self.name), self.StartDate, self.Enddate, self.CompetitionVenue, self.Organizer, self.NumberOfLanes, self.Length, self.IndividualStartFee, self.RelayStartFee, self.Description)
             try:
+                #sqlclassobj.mycursor.execute("ALTER TABLE COMPETITION MODIFY CompName VARCHAR(255)")
+                #sqlclassobj.mydb.commit()
                 sqlclassobj.mycursor.execute(queryinsert, valuesinsert)
                 sqlclassobj.mydb.commit()
                 self.id = sqlclassobj.mycursor.lastrowid
@@ -89,10 +91,10 @@ class competition:
         else:
             print("Competition already exists, update instead")
             queryupdate = "UPDATE COMPETITION SET CompName = %s, StartDate = %s, EndDate = %s, CompetitionVenue = %s, Organizer = %s, NumberOfLanes = %s, Length = %s, IndividualStartFee = %s, RelayStartFee = %s, Description = %s WHERE ID = %s"
-            valuesupdate = (self.name, self.StartDate, self.Enddate, self.CompetitionVenue, self.Organizer, self.NumberOfLanes, self.Length, self.IndividualStartFee, self.RelayStartFee, self.Description, self.id)
+            valuesupdate = (str(self.name), self.StartDate, self.Enddate, self.CompetitionVenue, self.Organizer, self.NumberOfLanes, self.Length, self.IndividualStartFee, self.RelayStartFee, self.Description, self.id)
             #try:
             print("type")
-            print(type(self.name))
+            print(type(str(self.name)))
             sqlclassobj.mycursor.execute(queryupdate, valuesupdate)
             sqlclassobj.mydb.commit()
             sqlclassobj.close()
