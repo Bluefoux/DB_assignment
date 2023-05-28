@@ -4,15 +4,6 @@ import competition as comp
 import guiclass as gui
 import startlstgui as startlst
 
-"""
-TODO:
-Add new competition button do stuff (kinda done)
-Edit competition
-program knapp (need to make things happen when clicked)
-Lägg till scroll ting för competitions
-
-consider making a class for most of this (its starting to get messy)
-"""
 class myguiclass:
 
     def __init__() -> None:
@@ -44,8 +35,6 @@ class myguiclass:
             compobj = comp.competition(id=m['ID'], name=m['CompName'], StartDate=m['StartDate'], Enddate=m['EndDate'], CompetitionVenue=m['CompetitionVenue'], Organizer=m['Organizer'], NumberOfLanes=m['NumberOfLanes'], Length=m['Length'], IndividualStartFee=m['IndividualStartFee'], RelayStartFee=m['RelayStartFee'], Description=m['Description'])
             compobjlst.append(compobj)
         
-        #for i in range(len(compobjlst)):
-        #    print(compobjlst[i].id)
         Create_compbutton = tk.Button(
                 wind,
                 width=20,
@@ -54,7 +43,6 @@ class myguiclass:
                 relief="ridge",
                 anchor="w"
             )
-        #Create_compbutton = tk.Button(wind, text="Create new competition", command= lambda: myguiclass.Add_comp_button_clicked(wind))
         Create_compbutton.grid(row=0, column=0)
         
         i = 1
@@ -103,14 +91,10 @@ class myguiclass:
         edit_compwind.destroy()
 
     def editcompbuttonclick(wind, compobj):
+        mylst = []
         edit_compwind = tk.Toplevel(wind)
         edit_compwind.title("edit competition")
         mytup = ("Name", "Start Date", "End Date", "Venue", "Organizer", "Number of lanes", "Pool length", "Individual fee", "Relay fee")
-        mylst = []
-        #i=1
-        #i = startlst.startlstclass.editloop_returnrow(edit_compwind, compobj, mylst, mytup, 1)
-        #nonvalid_attr = ("id", "eventid", "competitionid", "statusid", "statusid", "eventdict", "Description")
-        #name=None, StartDate=None, Enddate=None, CompetitionVenue=None, Organizer=None, NumberOfLanes=None, Length=None, IndividualStartFee=None, RelayStartFee=None, Eventdict=None ,Description=None, id=None
         valid_attr = ("name", "StartDate", "Enddate", "CompetitionVenue", "Organizer", "NumberOfLanes", "Length", "IndividualStartFee", "RelayStartFee")
         i=1
         for attr, value in vars(compobj).items():
@@ -134,7 +118,6 @@ class myguiclass:
             text="Save changes",
             command= lambda: myguiclass.savecompbutton_clicked(compobj, mylst, description)
         )
-        #savecompbutton = tk.Button(edit_compwind, text="Save changes", command= lambda: myguiclass.savecompbutton_clicked(compobj, mylst, description))
         savecompbutton.grid(row=i+1, column=1)
 
         edit_compwind.protocol("WM_DELETE_WINDOW", lambda: myguiclass.on_close_editcomp(wind, edit_compwind))
@@ -171,11 +154,9 @@ class myguiclass:
             text="Save",
             command=lambda : myguiclass.savecompbutton_clicked(compobj, mylst, description)
         )
-        #savecompbutton = tk.Button(create_compwind, text="Save", command= lambda: myguiclass.savecompbutton_clicked(compobj, mylst, description))
         savecompbutton2.grid(row=i+1, column=1)
         create_compwind.protocol("WM_DELETE_WINDOW", lambda: myguiclass.on_close_addcomp(wind, create_compwind))
         create_compwind.mainloop()
-        #print("Button was clicked!")
 
     def savecompbutton_clicked(compobj, mylst, description):
         valid_attr = ("name", "StartDate", "Enddate", "CompetitionVenue", "Organizer", "NumberOfLanes", "Length", "IndividualStartFee", "RelayStartFee")

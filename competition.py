@@ -42,8 +42,8 @@ class competition:
             sqlclassobj.mycursor.execute(query, values)
             invoice = sqlclassobj.mycursor.fetchall()
             sqlclassobj.close()
-            for x in invoice: #bara för test
-                print(invoice) #ska inte printas, ska returneras
+            for x in invoice:
+                print(invoice) #should only return invoice
             return invoice
         except:
             print("No competition with that name found")
@@ -112,7 +112,6 @@ class competition:
             for row in myresult:
                 event_id = row['ID']
                 event_name = row['EventName']
-                # Add the event to the eventdict dictionary
                 self.eventdict[event_id] = event_name
             return 1
         except:

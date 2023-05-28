@@ -16,11 +16,7 @@ class guiclasstwo:
                 setattr(eventobj, attr, mylst[i].get())
                 i += 1
         setattr(eventobj, "relay", rel.get())
-        #eventobj = event.event(competitionid=compobj.id, eventnumber=mylst[0].get(), eventname=mylst[1].get(), distance=mylst[2].get(), gender=mylst[3].get(), maxage=mylst[4].get(), qualifyingtime=mylst[5].get(), relay=rel.get())
-        #mylst.append(rel)
         eventobj.save()
-        #eventobjlst.append(eventobj)
-        #print("Save button was clicked!")
     
     def update_checkvar(checkvar):
         if(checkvar.get() == 0):
@@ -117,7 +113,7 @@ class guiclasstwo:
         addevwind.mainloop()
         
     
-    def editeventbutton_clicked(progwind, eventobj, compobj): #needed in programbuttonclick
+    def editeventbutton_clicked(progwind, eventobj, compobj):
         mylst = []
         edit_evepwind = tk.Toplevel(progwind)
         edit_evepwind.title("edit event")
@@ -151,8 +147,7 @@ class guiclasstwo:
         edit_evepwind.protocol("WM_DELETE_WINDOW", lambda: guiclasstwo.on_close(progwind, compobj, edit_evepwind))
         edit_evepwind.mainloop()
 
-    def resultbutton_clicked(progwind, eventobj): #needed in programbuttonclick
-        #tk.Toplevel(progwind)
+    def resultbutton_clicked(eventobj): #future work
         print("Show result list!")
     
     def event_layout(progwind, compobj):
@@ -162,7 +157,7 @@ class guiclasstwo:
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
         sqlquery = "SELECT * FROM EVENT WHERE CompetitionID = %s"
-        values = (compobj.id,)  # Enclose compobj.id in a tuple
+        values = (compobj.id,)
         try:
             sqlclassobj.mycursor.execute(sqlquery, values)
             myresult = sqlclassobj.mycursor.fetchall()
@@ -186,5 +181,4 @@ class guiclasstwo:
 
         guiclasstwo.event_layout(progwind, compobj)
         progwind.mainloop()
-        #print("Show program!")
         
