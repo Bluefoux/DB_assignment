@@ -46,8 +46,15 @@ class myguiclass:
         
         #for i in range(len(compobjlst)):
         #    print(compobjlst[i].id)
-
-        Create_compbutton = tk.Button(wind, text="Create new competition", command= lambda: myguiclass.Add_comp_button_clicked(wind))
+        Create_compbutton = tk.Button(
+                wind,
+                width=20,
+                text="Create new competition",
+                command=lambda wind=wind: myguiclass.Add_comp_button_clicked(wind),
+                relief="ridge",
+                anchor="w"
+            )
+        #Create_compbutton = tk.Button(wind, text="Create new competition", command= lambda: myguiclass.Add_comp_button_clicked(wind))
         Create_compbutton.grid(row=0, column=0)
         
         i = 1
@@ -121,7 +128,13 @@ class myguiclass:
         description = tk.Entry(edit_compwind, bd = 5)
         description.insert(0, compobj.Description)
         description.grid(row=i, column=1)
-        savecompbutton = tk.Button(edit_compwind, text="Save changes", command= lambda: myguiclass.savecompbutton_clicked(compobj, mylst, description))
+        savecompbutton = tk.Button(
+            edit_compwind,
+            width=20,
+            text="Save changes",
+            command= lambda: myguiclass.savecompbutton_clicked(compobj, mylst, description)
+        )
+        #savecompbutton = tk.Button(edit_compwind, text="Save changes", command= lambda: myguiclass.savecompbutton_clicked(compobj, mylst, description))
         savecompbutton.grid(row=i+1, column=1)
 
         edit_compwind.protocol("WM_DELETE_WINDOW", lambda: myguiclass.on_close_editcomp(wind, edit_compwind))
@@ -152,23 +165,27 @@ class myguiclass:
         e.grid(row=i, column=0)
         description = tk.Entry(create_compwind, bd = 5)
         description.grid(row=i, column=1)
-        savecompbutton = tk.Button(create_compwind, text="Save", command= lambda: myguiclass.savecompbutton_clicked(compobj, mylst, description))
-        savecompbutton.grid(row=i+1, column=1)
+        savecompbutton2 = tk.Button(
+            create_compwind,
+            width=20,
+            text="Save",
+            command=lambda : myguiclass.savecompbutton_clicked(compobj, mylst, description)
+        )
+        #savecompbutton = tk.Button(create_compwind, text="Save", command= lambda: myguiclass.savecompbutton_clicked(compobj, mylst, description))
+        savecompbutton2.grid(row=i+1, column=1)
         create_compwind.protocol("WM_DELETE_WINDOW", lambda: myguiclass.on_close_addcomp(wind, create_compwind))
         create_compwind.mainloop()
         #print("Button was clicked!")
 
     def savecompbutton_clicked(compobj, mylst, description):
-        valid_attr = ("CompName", "StartDate", "Enddate", "CompetitionVenue", "Organizer", "NumberOfLanes", "Length", "IndividualStartFee", "RelayStartFee")
+        valid_attr = ("name", "StartDate", "Enddate", "CompetitionVenue", "Organizer", "NumberOfLanes", "Length", "IndividualStartFee", "RelayStartFee")
         i=0
-        #print(len(vars(compobj).items()))
-        #print(len(mylst))
         for attr, value in vars(compobj).items():
-            if attr not in valid_attr:
+            if attr in valid_attr:
                 setattr(compobj, attr, mylst[i].get())
                 i += 1
         setattr(compobj, "Description", description.get())
         #compname = compobj(name=mylst[0].get(), StartDate=mylst[1].get(), Enddate=mylst[2].get(), CompetitionVenue=mylst[3].get(), Organizer=mylst[4].get(), NumberOfLanes=mylst[5].get(), Length=mylst[6].get(), IndividualStartFee=mylst[7].get(), RelayStartFee=mylst[8].get(), Description=description.get())
-        compobj.save() #uncomment this when change is wanted in database
+        compobj.save()
         #compobjlst.append(compname) #dont think i need this
-        print("Save button was clicked!")
+        #print("Save button was clicked!")

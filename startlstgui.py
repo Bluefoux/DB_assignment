@@ -11,7 +11,7 @@ class startlstclass:
         sqlclassobj.createdictcursor()
         query = "SELECT AthleatName, Lastname, TeamName, RegistrationTime FROM ATHLEATS INNER JOIN EVENT ON ATHLEATS.EventID = EVENT.ID AND EVENT.CompetitionID = %s AND ATHLEATS.EventID = %s ORDER BY RegistrationTime ASC"
         values = (eventobj.competitionid, eventobj.id)
-        print(values)
+        #print(values)
         try:
             sqlclassobj.mycursor.execute(query, values)
             startlst = sqlclassobj.mycursor.fetchall()
@@ -41,7 +41,7 @@ class startlstclass:
                 y += 1
             i += 1
         startwindow.mainloop()
-        print("Show start list!")
+        #print("Show start list!")
 
     def heatlstbutton_clicked(progwind, eventobj):
         sqlclassobj = sqlting()
@@ -50,7 +50,7 @@ class startlstclass:
         
         query = "SELECT Name, Lastname, TeamName, Heat, Lane, RegistrationTime FROM ATHLEATS INNER JOIN EVENT ON ATHLEATS.EventID = EVENT.ID AND EVENT.CompetitionID = %s AND ATHLEATS.EventID = %s ORDER BY Heat, Lane ASC"
         values = (eventobj.competitionid, eventobj.id)
-        print(values)
+        #print(values)
         try:
             sqlclassobj.mycursor.execute(query, values)
             startlst = sqlclassobj.mycursor.fetchall()
@@ -77,7 +77,7 @@ class startlstclass:
                 y += 1
             i += 1
         heatwindow.mainloop()
-        print("Show start list!")
+        #print("Show start list!")
 
     def choosefilebutton_clicked(mylst): #fix this in the future
         #open file dialog (utforskaren) and choose file
@@ -86,7 +86,7 @@ class startlstclass:
     def saveathleatbutton_clicked(mylst):
         athobj = athlete(name=mylst[0].get(), lastname=mylst[1].get(), teamname=mylst[2].get(), gender=mylst[3].get(), age=mylst[4].get(), registrationtime=mylst[5].get())
         #athobj.save() #uncomment this when change is wanted in database
-        print("Save button was clicked!") #return athobj?
+        print("Save button was clicked!")
 
     def savefromfilebutton_clicked(mylst): #fix this in the future
         print("Save from file button was clicked!")
@@ -129,7 +129,7 @@ class startlstclass:
         athleatwind.protocol("WM_DELETE_WINDOW", lambda: startlstclass.on_close_addathleat(progwind, athleatwind))
 
         athleatwind.mainloop()
-        print("Add athleat to event!")
+        #print("Add athleat to event!")
 
     #def editloop_returnrow(mywind, myobj, mylst, mytup, startrow):
         

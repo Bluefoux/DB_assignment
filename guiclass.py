@@ -13,7 +13,7 @@ class guiclasstwo:
         #mylst.append(rel)
         eventobj.save()
         eventobjlst.append(eventobj)
-        print("Save button was clicked!")
+        #print("Save button was clicked!")
 
     def update_checkvar(checkvar):
         if(checkvar.get() == 0):
@@ -147,5 +147,5 @@ class guiclasstwo:
 
         guiclasstwo.event_layout(progwind, compobj)
         progwind.mainloop()
-        print("Show program!")
+        #print("Show program!")
         
