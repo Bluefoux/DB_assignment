@@ -10,7 +10,7 @@ import mysql.connector
 from sqlclass import sqlting
 
 class event:
-    def __init__(self, id=None, competitionid=None, eventnumber=None, eventname=None, distance=None, gender=None, maxage=None, qualifyingtime=None, relay=None):
+    def __init__(self, id=0, competitionid=None, eventnumber=None, eventname=None, distance=None, gender=None, maxage=None, qualifyingtime=None, relay=None):
         self.id = id
         self.competitionid = competitionid
         self.eventnumber = eventnumber
@@ -27,13 +27,13 @@ class event:
         sqlclassobj.createdictcursor()
         if(self.id == 0):
             try:
-                query = "INSERT INTO EVENT (CompetitionID, EventNumber, EventName, Distance, Gender, MaxAge, QualifyingTime, Relay)"
-                values = (self.competitionid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay)
+                query = "INSERT INTO EVENT (ID, CompetitionID, EventNumber, EventName, Distance, Gender, MaxAge, QualifyingTime, Relay) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                values = (self.id, self.competitionid, self.eventnumber, self.eventname, self.distance, self.gender, self.maxage, self.qualifyingtime, self.relay)
                 sqlclassobj.mycursor.execute(query, values)
                 sqlclassobj.mydb.commit()
                 self.id = sqlclassobj.mycursor.lastrowid
                 sqlclassobj.close()
-                return self.id
+                return 1
             except:
                 print("Error when inserting event")
                 sqlclassobj.close()

@@ -3,7 +3,7 @@ from sqlclass import sqlting
 import tkinter as tk
 
 class athlete:
-    def __init__(self, statusid=None, eventid=None, name=None, lastname=None, teamname=None, gender=None, age=None, registrationtime=None, resulttime=None, id=None):
+    def __init__(self, statusid=None, eventid=None, name=None, lastname=None, teamname=None, gender=None, age=None, registrationtime=None, resulttime=None, id=0):
         self.id = id
         self.statusid = statusid
         self.eventid = eventid
@@ -20,8 +20,8 @@ class athlete:
         sqlclassobj.connect()
         sqlclassobj.createdictcursor()
         if(self.id == 0):
-            query = "INSERT INTO ATHLEATS (StatusID, EventID, AthleatName, LastName, TeamName, Gender, Age, RegistrationTime, ResultTime)"
-            values = (self.statusid, self.eventid, self.name, self.lastname, self.teamname, self.gender, self.age, self.registrationtime, self.resulttime)
+            query = "INSERT INTO ATHLEATS (ID, StatusID, EventID, AthleatName, LastName, TeamName, Gender, Age, RegistrationTime, ResultTime) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            values = (self.id, self.statusid, self.eventid, self.name, self.lastname, self.teamname, self.gender, self.age, self.registrationtime, self.resulttime)
             try:
                 sqlclassobj.mycursor.execute(query, values)
                 sqlclassobj.mydb.commit()
