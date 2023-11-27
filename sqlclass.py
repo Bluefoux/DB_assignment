@@ -10,8 +10,8 @@ class sqlting:
         try:
             self.mydb = mysql.connector.connect(
                 host="127.0.0.1",
-                user="user",
-                password="password1!",
+                user="root",
+                password="root",
                 database="mydb",
                 charset="utf8mb4"
             )
