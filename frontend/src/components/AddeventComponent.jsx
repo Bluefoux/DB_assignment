@@ -4,7 +4,7 @@
  */
 import React from 'react';
 
-export default function AddcompComponent() {
+export default function AddeventComponent() {
     const mylst = ['Home', 'newpage', 'thing', 'anotherThing', 'temp', 'temp2', 'jadalada'];
 
     const handleClick = async (buttonValue) => {
@@ -38,7 +38,7 @@ export default function AddcompComponent() {
                 <div className="flex flex-col justify-center space-y-8 text-center">
                     <div className="space-y-2">
                         <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
-                        Events
+                        Add Events
                         </h1>
                     </div>
                     {mylst.map((item, index) => (
