@@ -9,7 +9,7 @@ export default function EventComponent() {
     const navigate = useNavigate();
     const mylst = ['Home', 'newpage', 'thing', 'anotherThing', 'temp', 'temp2', 'jadalada'];
 
-    const handleClick = async (buttonValue) => {
+    const handleClickevent = async (buttonValue) => {
     // Replace with your endpoint URL
     const endpoint = 'https://your-endpoint.com/post';
 
@@ -47,7 +47,7 @@ export default function EventComponent() {
                 <button
                     key={index}
                     className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleClick(item)}
+                    onClick={() => handleClickevent(item)}
                 >
                     {item}
                 </button>
