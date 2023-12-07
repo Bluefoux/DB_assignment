@@ -12,7 +12,18 @@ export default function HomeComponent() {
   const mylst = ['Home', 'newpage', 'thing', 'anotherThing', 'temp', 'temp2', 'jadalada'];
   const myid = [1, 2, 3, 4, 5, 6, 7];
   const [showCompetitions, setShowCompetitions] = useState(true);
+  const [showAddEvent, setShowAddEvent] = useState(true);
   const [valueOfCompetition, setValueOfCompetition] = useState('');
+  const [eventInfo, setEventInfo] = useState({
+    eventNumber: '',
+    eventName: '',
+    distance: '',
+    gender: '',
+    maxAge: '',
+    qualifyingTime: '',
+    isRelay: false,
+  });
+  let content = null;
 
   useEffect(() => {
     // const fetchMessages = async () => {
@@ -34,6 +45,28 @@ export default function HomeComponent() {
     //handleClick(1);
       }, []);
 
+  const handleChange = (thing) => {
+    const { name, value, type, checked } = thing.target;
+    const newValue = type === 'checkbox' ? checked : value;
+
+    setEventInfo({
+      ...eventInfo,
+      [name]: newValue,
+    });
+  };
+
+  const handleSubmit = () => {
+    //e.preventDefault(); // Prevents the default form submission behavior
+    // const response = await fetch('your-api-endpoint', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(eventInfo),
+    // });
+    console.log(eventInfo);
+  };
+
   const handleClick = async (buttonValue, value) => {
     // Replace with your endpoint URL
     // const endpoint = 'http://localhost:5173/GetEvents';
@@ -53,156 +86,152 @@ export default function HomeComponent() {
 
     //   // Process the response (optional)
     //   const data = await response.json();
-      console.log(value);
-      setValueOfCompetition(value)
-      setShowCompetitions(false)
+    console.log(value);
+    setValueOfCompetition(value)
+    setShowCompetitions(false)
     // } catch (error) {
     //   console.error('Error posting data:', error);
     // }
   };
 
-  const handleClickevent = async (buttonValue) => {
-    // Replace with your endpoint URL
-    const endpoint = 'https://your-endpoint.com/post';
+  const handleClickevent = async (value) => {
+    console.log(value);
+    setShowAddEvent(false)
+    setShowCompetitions(false)
+  };
 
-    try {
-        const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ buttonValue }),
-        });
-
-        if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-      // Process the response (optional)
-        const data = await response.json();
-        console.log(data);
-    } catch (error) {
-        console.error('Error posting data:', error);
-    }
-    };
-
-    return (
-      <>
-        {showCompetitions ? (
-          <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black">
-            <div className="container px-4 md:px-6">
-        <div className="flex flex-col justify-center space-y-8 text-center">
-          <div className="space-y-2">
+    if (showCompetitions){
+      content = (
+      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col justify-center space-y-8 text-center">
+            <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
               Competitions
             </h1>
-          </div>
-          {mylst.map((item, index) => (
-            <button
-              key={index}
-              className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => handleClick(item, myid[index])}
+            </div>
+            {mylst.map((item, index) => (
+              <button
+                key={index}
+                className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => handleClick(item, myid[index])}
+              >
+                {item}
+              </button>
+            ))}
+            <button className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              //onClick={window.location('/Add_Competition')}
+              onClick={() => navigate('/Add_Competition')}
             >
-              {item}
+              Add Competition
             </button>
-          ))}
-          <button className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            //onClick={window.location('/Add_Competition')}
-            onClick={() => navigate('/Add_Competition')}
-          >
-            Add Competition
-          </button>
+          </div>
         </div>
-      </div>
-          </section>
-        ) : (
-          <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black">
-            <div className="container px-4 md:px-6">
+            </section>
+      );
+    } else if (showAddEvent && !showCompetitions) {
+      content = (
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black">
+          <div className="container px-4 md:px-6">
             <div className="flex flex-col justify-center space-y-8 text-center">
-                <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
-                    Event
-                </h1>
-                </div>
-                {mylst.map((item, index) => (
-                <button
-                    key={index}
-                    className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleClickevent(item)}
-                >
-                    {item}
-                </button>
-                ))}
-                <button className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    //onClick={window.location('/Add_Competition')}
-                    onClick={() => navigate('/Add_event')}
-                >
-                    Add Event
-                </button>
+              <div className="space-y-2">
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
+                  Event
+              </h1>
+              </div>
+              {mylst.map((item) => (
+              <h1 className="text-2xl font-bold tracking-tighter sm:text-2xl xl:text-2xl/none bg-clip-text text-transparent text-white">
+                  {item}
+              </h1>
+              ))}
+              <button
+                className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => handleClickevent(valueOfCompetition)}
+              >
+                Add Event
+              </button>
             </div>
-        </div>
-          </section>
-        )}
-      </>
-    );
-}  
-
-//   return (
-//     <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black">
-//       <div className="container px-4 md:px-6">
-//         <div className="flex flex-col justify-center space-y-8 text-center">
-//           <div className="space-y-2">
-//             <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
-//               Competitions
-//             </h1>
-//           </div>
-//           {mylst.map((item, index) => (
-//             <button
-//               key={index}
-//               className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-//               onClick={() => {
-//                 handleClick(item);
-//                 navigate('/Events'); // Redirect to '/Events' when button is clicked
-//               }}
-//             >
-//               {item}
-//             </button>
-//           ))}
-//           <button className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-//             //onClick={window.location('/Add_Competition')}
-//             onClick={() => navigate('/Add_Competition')}
-//           >
-//             Add Competition
-//           </button>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
-{/* <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black">
+          </div>
+        </section>
+      );
+    } else {
+      content = (
+      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black">
         <div className="container px-4 md:px-6">
-            <div className="flex flex-col justify-center space-y-8 text-center">
-                <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
-                    Event
-                </h1>
-                </div>
-                {mylst.map((item, index) => (
-                <button
-                    key={index}
-                    className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleClick(item)}
-                >
-                    {item}
-                </button>
-                ))}
-                <button className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    //onClick={window.location('/Add_Competition')}
-                    onClick={() => navigate('/Add_event')}
-                >
-                    Add Event
-                </button>
+          <div className="flex flex-col justify-center space-y-8 text-center">
+            <div className="space-y-2">
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
+              Add Events
+            </h1>
             </div>
-        </div>
-    </section> */}
+            <input
+              className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
+              type="int"
+              name="eventNumber"
+              placeholder="Event Number"
+              value={eventInfo.eventNumber}
+              onChange={handleChange}
+            />
+            <input
+              className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
+              type="text"
+              name="eventName"
+              placeholder="Event Name"
+              value={eventInfo.eventName}
+              onChange={handleChange}
+            />
+            <input
+              className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
+              type="int"
+              name="distance"
+              placeholder="Distance"
+              value={eventInfo.distance}
+              onChange={handleChange}
+            />
+            <input
+              className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
+              type="text"
+              name="gender"
+              placeholder="Gender"
+              value={eventInfo.gender}
+              onChange={handleChange}
+            />
+            <input
+              className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
+              type="int"
+              name="maxAge"
+              placeholder="Max Age"
+              value={eventInfo.maxAge}
+              onChange={handleChange}
+            />
+            <input
+              className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
+              type="text"
+              name="qualifyingTime"
+              placeholder="Qualification Time"
+              value={eventInfo.qualifyingTime}
+              onChange={handleChange}
+            />
+            <label className='text-white'>
+              <input
+                type="checkbox"
+                name="isRelay"
+                placeholder="Relay"
+                value={eventInfo.isRelay}
+                onChange={handleChange}
+              />
+                Relay
+            </label>
+            <button
+              className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
+          </div>
+      </div>
+    </section>
+      );
+    }
+    return <>{content}</>;
+}
