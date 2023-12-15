@@ -9,7 +9,14 @@ import { useNavigate } from 'react-router-dom';
 
 export default function HomeComponent() {
   const navigate = useNavigate();
-  const mylst = ['Home', 'newpage', 'thing', 'anotherThing', 'temp', 'temp2', 'jadalada'];
+  // const mylst = ['Home', 'newpage', 'thing', 'anotherThing', 'temp', 'temp2', 'jadalada'];
+  // const [compinfo , setCompinfo] = useState([{
+  //   compid: '',
+  //   compname: '',
+  //   compdate: '',
+  //   complocation: ''
+  // }]);
+  const compinfo = [];
   const myid = [1, 2, 3, 4, 5, 6, 7];
   const [showCompetitions, setShowCompetitions] = useState(true);
   const [showAddEvent, setShowAddEvent] = useState(true);
@@ -22,26 +29,27 @@ export default function HomeComponent() {
     maxAge: '',
     qualifyingTime: '',
     isRelay: false,
+    comp_id: ''
   });
   let content = null;
 
   useEffect(() => {
-    // const fetchMessages = async () => {
-    //   try {
-    //               const response = await fetch('http://localhost:9999/api/messages');
-    //               if (!response.ok) {
-                  
-    //   throw new Error(`HTTP error! status: ${response.status}`);
-    //               }
-    //               const data = await response.json();
-    //               setStatusMessage(data.Messages);
-    //               console.log(data.Messages);
-    //           } catch (error) {
-    //               console.error('Failed to fetch messages:', error);
-    //           }
-    //       };
+    const fetchMessages = async () => {
+      try {
+                  const response = await fetch('http://localhost:8501/get_competitions');
+                  if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+                  }
+                  const data = await response.json();
+                  setCompinfo(data);
+                  setStatusMessage(data.Messages);
+                  console.log(data.Messages);
+              } catch (error) {
+                  console.error('Failed to fetch messages:', error);
+              }
+          };
   
-    //       fetchMessages();
+          fetchMessages();
     //handleClick(1);
       }, []);
 
@@ -55,16 +63,32 @@ export default function HomeComponent() {
     });
   };
 
-  const handleSubmit = () => {
-    //e.preventDefault(); // Prevents the default form submission behavior
-    // const response = await fetch('your-api-endpoint', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(eventInfo),
-    // });
+  const handleSubmit = async () => {
+    const endpoint = 'http://localhost:8501/add_event';
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(eventInfo),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            // Process the response (optional)
+            const data = await response.json();
+            console.log(data);
+            // Redirect to a different page after successful submission
+            navigate('/');
+        } catch (error) {
+            console.error('Error posting data:', error);
+        }
     console.log(eventInfo);
+    setShowAddEvent(false)
+    setShowCompetitions(true)
   };
 
   const handleClick = async (buttonValue, value) => {
@@ -95,6 +119,7 @@ export default function HomeComponent() {
   };
 
   const handleClickevent = async (value) => {
+    setEventInfo({comp_id: value})
     console.log(value);
     setShowAddEvent(false)
     setShowCompetitions(false)
@@ -110,7 +135,7 @@ export default function HomeComponent() {
               Competitions
             </h1>
             </div>
-            {mylst.map((item, index) => (
+            {compinfo.map((item, index) => (
               <button
                 key={index}
                 className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -139,7 +164,7 @@ export default function HomeComponent() {
                   Event
               </h1>
               </div>
-              {mylst.map((item) => (
+              {compinfo.map((item) => (
               <h1 className="text-2xl font-bold tracking-tighter sm:text-2xl xl:text-2xl/none bg-clip-text text-transparent text-white">
                   {item}
               </h1>

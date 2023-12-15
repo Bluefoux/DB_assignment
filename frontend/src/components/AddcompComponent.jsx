@@ -5,31 +5,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function AddeventComponent() {
+export default function AddcompComponent() {
     const navigate = useNavigate();
-    const mylst = ['Home', 'newpage', 'thing', 'anotherThing', 'temp', 'temp2', 'jadalada'];
     
-    const [eventInfo, setEventInfo] = useState({
-        eventNumber: '',
-        eventName: '',
-        distance: '',
-        gender: '',
-        maxAge: '',
-        qualifyingTime: '',
-        isRelay: false,
+    const [compInfo, setCompInfo] = useState({
+        compname: '',
+        compdate: '',
+        compvenue: ''
     });
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setEventInfo((prevEventInfo) => ({
-            ...prevEventInfo,
+        setCompInfo((prevCompInfo) => ({
+            ...prevCompInfo,
             [name]: type === 'checkbox' ? checked : value,
         }));
     };
 
     const handleSubmit = async () => {
         // Replace with your endpoint URL
-        const endpoint = 'https://your-endpoint.com/post';
+        const endpoint = 'http://localhost:8501/add_competition';
 
         try {
             const response = await fetch(endpoint, {
@@ -37,7 +32,7 @@ export default function AddeventComponent() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(eventInfo),
+                body: JSON.stringify(compInfo),
             });
 
             if (!response.ok) {
@@ -48,10 +43,10 @@ export default function AddeventComponent() {
             const data = await response.json();
             console.log(data);
             // Redirect to a different page after successful submission
-            navigate('/success');
         } catch (error) {
             console.error('Error posting data:', error);
         }
+        navigate('/');
     };
 
     return (
@@ -65,63 +60,28 @@ export default function AddeventComponent() {
                     </div>
                     <input
                         className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
-                        type="int"
-                        name="eventNumber"
-                        placeholder="Event Number"
-                        value={eventInfo.eventNumber}
+                        type="string"
+                        name="compname"
+                        placeholder="Competition Name"
+                        value={compInfo.compname}
                         onChange={handleChange}
                     />
                     <input
                         className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
-                        type="text"
-                        name="eventName"
-                        placeholder="Event Name"
-                        value={eventInfo.eventName}
+                        type="date"
+                        name="compdate"
+                        placeholder="Competition Date" // Placeholder text here
+                        value={compInfo.compdate}
                         onChange={handleChange}
                     />
                     <input
                         className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
-                        type="int"
-                        name="distance"
-                        placeholder="Distance"
-                        value={eventInfo.distance}
+                        type="string"
+                        name="compvenue"
+                        placeholder="Competition Venue"
+                        value={compInfo.compvenue}
                         onChange={handleChange}
                     />
-                    <input
-                        className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
-                        type="text"
-                        name="gender"
-                        placeholder="Gender"
-                        value={eventInfo.gender}
-                        onChange={handleChange}
-                    />
-                    <input
-                        className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
-                        type="int"
-                        name="maxAge"
-                        placeholder="Max Age"
-                        value={eventInfo.maxAge}
-                        onChange={handleChange}
-                    />
-                    <input
-                        className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
-                        type="text"
-                        name="qualifyingTime"
-                        placeholder="Qualification Time"
-                        value={eventInfo.qualifyingTime}
-                        onChange={handleChange}
-                    />
-                    <label className='text-white'>
-                        <input
-                            type="checkbox"
-                            name="isRelay"
-                            placeholder="Relay"
-                            value={eventInfo.isRelay}
-                            onChange={handleChange}
-                        />
-                        Relay
-                    </label>
-                    {/* Other input fields with similar structure */}
                     <button
                         className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         onClick={handleSubmit}
