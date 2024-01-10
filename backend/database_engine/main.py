@@ -1,4 +1,3 @@
-
 import json
 from os import getenv
 from sqlite3 import IntegrityError, DatabaseError
