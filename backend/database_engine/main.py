@@ -1,7 +1,7 @@
 
 import json
 from os import getenv
-from sqlite3 import IntegrityError
+from sqlite3 import IntegrityError, DatabaseError
 from urllib import response
 
 import db_utilities as db_conn
@@ -21,7 +21,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = db_conn.get_connection(
     app.config["MYSQL_USER"],
     app.config["MYSQL_PASSWORD"],
     app.config["MYSQL_DATABASE"],
-    3309,
+    3306,
     version=app.config["DEVELOPMENT"])
 
 db = tables.db
@@ -38,8 +38,18 @@ def index():
     """
     return "db!"
 
+@app.errorhandler(HTTPException)
+def handle_exception(e):
+    """
+    Error handler
+    """
+    return jsonify(str(e)), e.code
+
 @app.route('/get_competitions_events', methods=["GET"])
 def get_competitions() -> response:
+    '''
+    get all competitions
+    '''
     return db.session.execute(select(tables.competitions)).all(), 200
 
 # @app.route('/get_events', methods=["GET"])
@@ -48,8 +58,28 @@ def get_competitions() -> response:
 #     return db.session.execute(select(tables.events).
 #                               where(tables.events.comp_id == payload['comp_id'])).all(), 200
 
+@app.route('/create_tables', methods=['GET'])
+def create_all_tbs() -> response:
+    '''
+    create_tables route. drops all existing tables and then creates all tables
+    '''
+    try:
+        db.drop_all()
+        db.create_all()
+        with db.session.begin():
+            # This creates mock data in the database:
+            # for query in SQL_QUERY.split("\n"):
+            #     db.session.execute(text(query))
+            db.session.commit()
+    except DatabaseError:
+        abort(500, "Table(s) exist already.")
+    return jsonify("Tables created"), 200
+
 @app.route('/add_competition', methods=["POST"])
 def add_competition() -> response:
+    '''
+    add competition to table
+    '''
     payload = request.json # get competition payload
     competition = tables.competitions(**payload)
     with db.session.begin():
@@ -65,6 +95,9 @@ def add_competition() -> response:
 
 @app.route('/add_event', methods=["POST"])
 def add_event() -> response:
+    '''
+    add event to table
+    '''
     payload = request.json # get event payload
     event = tables.events(**payload)
     with db.session.begin():
