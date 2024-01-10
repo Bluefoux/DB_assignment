@@ -17,10 +17,7 @@ COPY . .
 # building the app
 RUN npm run build
 
-ENV DEVELOPMENT=prod
-
-ENV LISTEN_PORT 8500
-EXPOSE 8500
+ENV NODE_ENV=production
 
 # Set the command to run the app when the container starts
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]

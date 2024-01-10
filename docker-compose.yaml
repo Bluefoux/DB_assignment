@@ -1,4 +1,5 @@
 version: '3'
+
 services:
 
   frontend:
@@ -14,22 +15,20 @@ services:
       - "443:8500"
     volumes:
       - ./.config:/app/.config
-  
+
   database_engine:
     build:
       context: ./database_engine/
       dockerfile: Dockerfile
     image: database-engine-image
     depends_on:
-        - host_database
+      - host_database
     restart: unless-stopped
     hostname: database_engine
     container_name: genrat.database_engine
-    # ports:
-    #   - "8501:8501"
     volumes:
       - ./.config:/app/.config
-  
+
   host_database:
     build:
       context: ./host_database
@@ -38,8 +37,22 @@ services:
     restart: unless-stopped
     hostname: host_database
     container_name: genrat.host_database
-    # ports:
-    #   - "3306:3306"
     volumes:
       - ./.config:/app/.config
       - ./host_database/data:/var/lib/mysql
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: proj_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin_password
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
