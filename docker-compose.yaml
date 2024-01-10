@@ -1,0 +1,45 @@
+version: '3'
+services:
+
+  frontend:
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    image: frontend-image
+    restart: unless-stopped
+    hostname: frontend
+    container_name: genrat.frontend
+    ports:
+      - "80:80"
+      - "443:8500"
+    volumes:
+      - ./.config:/app/.config
+  
+  database_engine:
+    build:
+      context: ./database_engine/
+      dockerfile: Dockerfile
+    image: database-engine-image
+    depends_on:
+        - host_database
+    restart: unless-stopped
+    hostname: database_engine
+    container_name: genrat.database_engine
+    # ports:
+    #   - "8501:8501"
+    volumes:
+      - ./.config:/app/.config
+  
+  host_database:
+    build:
+      context: ./host_database
+      dockerfile: Dockerfile
+    image: host-database-image
+    restart: unless-stopped
+    hostname: host_database
+    container_name: genrat.host_database
+    # ports:
+    #   - "3306:3306"
+    volumes:
+      - ./.config:/app/.config
+      - ./host_database/data:/var/lib/mysql
