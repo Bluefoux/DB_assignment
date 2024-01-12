@@ -9,23 +9,10 @@ services:
     image: frontend-image
     restart: unless-stopped
     hostname: frontend
-    container_name: genrat.frontend
+    container_name: db_assignment.frontend
     ports:
       - "80:80"
       - "443:8500"
-    volumes:
-      - ./.config:/app/.config
-
-  database_engine:
-    build:
-      context: ./database_engine/
-      dockerfile: Dockerfile
-    image: database-engine-image
-    depends_on:
-      - host_database
-    restart: unless-stopped
-    hostname: database_engine
-    container_name: genrat.database_engine
     volumes:
       - ./.config:/app/.config
 
@@ -36,22 +23,23 @@ services:
     image: host-database-image
     restart: unless-stopped
     hostname: host_database
-    container_name: genrat.host_database
+    container_name: db_assignment.host_database
     volumes:
       - ./.config:/app/.config
       - ./host_database/data:/var/lib/mysql
 
-  mysql:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: proj_db
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin_password
-    ports:
-      - "3306:3306"
-    networks:
-      - app-network
+  database_engine:
+    build:
+      context: ./database_engine/
+      dockerfile: Dockerfile
+    image: database-engine-image
+    depends_on:
+      - host_database
+    restart: unless-stopped
+    hostname: database_engine
+    container_name: db_assignment.database_engine
+    volumes:
+      - ./.config:/app/.config
 
 networks:
   app-network:

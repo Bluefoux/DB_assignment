@@ -1,0 +1,16 @@
+{
+    "services": {
+        "frontend": {
+			    "local":443,
+           "prod":443
+        },
+        "database_engine": {
+			    "local":8501,
+          "prod":8501       
+		    },
+		    "host_database": {
+			    "local":3306,
+			    "prod":3306
+		    }
+    }
+}

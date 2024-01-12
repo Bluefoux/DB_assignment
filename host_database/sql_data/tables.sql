@@ -1,3 +1,3 @@
-drop database if exists comp_db;
-create database comp_db;
-use comp_db;
+drop database if exists proj_db;
+create database proj_db;
+use proj_db;

@@ -144,7 +144,7 @@ export default function HomeComponent() {
                 {item}
               </button>
             ))}
-            <button className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            <button className="m-2 p-2 bg-gradient-to-r from-[#0001c1] to-[#2193b0] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               //onClick={window.location('/Add_Competition')}
               onClick={() => navigate('/Add_Competition')}
             >
@@ -181,82 +181,128 @@ export default function HomeComponent() {
       );
     } else {
       content = (
-      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col justify-center space-y-8 text-center">
-            <div className="space-y-2">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
-              Add Events
-            </h1>
-            </div>
-            <input
-              className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
-              type="int"
-              name="eventNumber"
-              placeholder="Event Number"
-              value={eventInfo.eventNumber}
-              onChange={handleChange}
-            />
-            <input
-              className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
-              type="text"
-              name="eventName"
-              placeholder="Event Name"
-              value={eventInfo.eventName}
-              onChange={handleChange}
-            />
-            <input
-              className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
-              type="int"
-              name="distance"
-              placeholder="Distance"
-              value={eventInfo.distance}
-              onChange={handleChange}
-            />
-            <input
-              className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
-              type="text"
-              name="gender"
-              placeholder="Gender"
-              value={eventInfo.gender}
-              onChange={handleChange}
-            />
-            <input
-              className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
-              type="int"
-              name="maxAge"
-              placeholder="Max Age"
-              value={eventInfo.maxAge}
-              onChange={handleChange}
-            />
-            <input
-              className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
-              type="text"
-              name="qualifyingTime"
-              placeholder="Qualification Time"
-              value={eventInfo.qualifyingTime}
-              onChange={handleChange}
-            />
-            <label className='text-white'>
-              <input
-                type="checkbox"
-                name="isRelay"
-                placeholder="Relay"
-                value={eventInfo.isRelay}
-                onChange={handleChange}
-              />
-                Relay
-            </label>
-            <button
-              className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={handleSubmit}
-            >
-              Submit
-            </button>
+        <div>
+          <div className="bg-gradient-to-r from-[#0001c1] to-[#2193b0]">
+            <nav className="flex items-center justify-between px-6 py-4">
+              <div className="flex items-center space-x-4">
+                <div className="hidden md:flex space-x-2">
+                <ArrowLeftButtonEV/>
+                </div>
+              </div>
+            </nav>
           </div>
-      </div>
-    </section>
+          <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black">
+            <div className="container px-4 md:px-6">
+              <div className="flex flex-col justify-center space-y-8 text-center">
+                <div className="space-y-2">
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
+                  Add Events
+                </h1>
+                </div>
+                <input
+                  className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
+                  type="int"
+                  name="eventNumber"
+                  placeholder="Event Number"
+                  value={eventInfo.eventNumber}
+                  onChange={handleChange}
+                />
+                <input
+                  className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
+                  type="text"
+                  name="eventName"
+                  placeholder="Event Name"
+                  value={eventInfo.eventName}
+                  onChange={handleChange}
+                />
+                <input
+                  className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
+                  type="int"
+                  name="distance"
+                  placeholder="Distance"
+                  value={eventInfo.distance}
+                  onChange={handleChange}
+                />
+                <input
+                  className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
+                  type="text"
+                  name="gender"
+                  placeholder="Gender"
+                  value={eventInfo.gender}
+                  onChange={handleChange}
+                />
+                <input
+                  className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
+                  type="int"
+                  name="maxAge"
+                  placeholder="Max Age"
+                  value={eventInfo.maxAge}
+                  onChange={handleChange}
+                />
+                <input
+                  className="m-2 p-2 bg-white hover:bg-white text-black font-bold py-2 px-4 rounded"
+                  type="text"
+                  name="qualifyingTime"
+                  placeholder="Qualification Time"
+                  value={eventInfo.qualifyingTime}
+                  onChange={handleChange}
+                />
+                <label className='text-white'>
+                  <input
+                    type="checkbox"
+                    name="isRelay"
+                    placeholder="Relay"
+                    value={eventInfo.isRelay}
+                    onChange={handleChange}
+                  />
+                    Relay
+                </label>
+                <button
+                  className="m-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </button>
+              </div>
+          </div>
+        </section>
+        </div>
+      
       );
     }
     return <>{content}</>;
+}
+
+function ArrowLeftButtonEV(props) {
+  // Your ArrowLeftIcon component
+  const ArrowLeftIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="white"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m12 19-7-7 7-7" />
+      <path d="M19 12H5" />
+    </svg>
+  );
+
+  // Your click handler function
+  const handleButtonClick = () => {
+    // Add the action you want to perform here
+    setShowAddEvent(false)
+    setShowCompetitions(false)
+    // For example, you can navigate to a different page, toggle a state, etc.
+  };
+
+  return (
+    <button onClick={handleButtonClick} {...props}>
+      {ArrowLeftIcon}
+    </button>
+  );
 }
