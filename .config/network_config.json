@@ -9,8 +9,8 @@
           "prod":8501       
 		    },
 		    "host_database": {
-			    "local":3306,
-			    "prod":3306
+			    "local":33060,
+			    "prod":33060
 		    }
     }
 }

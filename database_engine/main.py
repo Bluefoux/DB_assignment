@@ -20,7 +20,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = db_conn.get_connection(
     app.config["MYSQL_USER"],
     app.config["MYSQL_PASSWORD"],
     app.config["MYSQL_DATABASE"],
-    3306,
+    33060,
     version=app.config["DEVELOPMENT"])
 
 db = tables.db

@@ -16,18 +16,6 @@ services:
     volumes:
       - ./.config:/app/.config
 
-  host_database:
-    build:
-      context: ./host_database
-      dockerfile: Dockerfile
-    image: host-database-image
-    restart: unless-stopped
-    hostname: host_database
-    container_name: db_assignment.host_database
-    volumes:
-      - ./.config:/app/.config
-      - ./host_database/data:/var/lib/mysql
-
   database_engine:
     build:
       context: ./database_engine/
@@ -40,6 +28,25 @@ services:
     container_name: db_assignment.database_engine
     volumes:
       - ./.config:/app/.config
+    environment:
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: proj_db
+
+  host_database:
+    build:
+      context: ./host_database
+      dockerfile: Dockerfile
+    image: host-database-image
+    restart: unless-stopped
+    hostname: host_database
+    container_name: db_assignment.host_database
+    ports:
+      - "3310:3306"
+    volumes:
+      - ./.config:/app/.config
+      - ./host_database/data:/var/lib/mysql
 
 networks:
   app-network:
