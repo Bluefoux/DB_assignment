@@ -13,14 +13,14 @@ from werkzeug.exceptions import HTTPException
 app = Flask(__name__)
 
 app.config["DEVELOPMENT"] = getenv("DEVELOPMENT", default="local")
-app.config["MYSQL_USER"] = getenv("MYSQL_USER", default="admin")
+app.config["MYSQL_USER"] = getenv("MYSQL_USER", default="root")
 app.config["MYSQL_PASSWORD"] = getenv("MYSQL_PASSWORD", default="admin")
 app.config["MYSQL_DATABASE"] = getenv("MYSQL_DATABASE", default="proj_db")
 app.config["SQLALCHEMY_DATABASE_URI"] = db_conn.get_connection(
     app.config["MYSQL_USER"],
     app.config["MYSQL_PASSWORD"],
     app.config["MYSQL_DATABASE"],
-    33060,
+    3306,
     version=app.config["DEVELOPMENT"])
 
 db = tables.db

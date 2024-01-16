@@ -1,5 +1,4 @@
 version: '3'
-
 services:
 
   frontend:
@@ -15,26 +14,23 @@ services:
       - "443:8500"
     volumes:
       - ./.config:/app/.config
-
+  
   database_engine:
     build:
       context: ./database_engine/
       dockerfile: Dockerfile
     image: database-engine-image
     depends_on:
-      - host_database
+        - db
     restart: unless-stopped
     hostname: database_engine
     container_name: db_assignment.database_engine
+    ports:
+      - "8501:8501"
     volumes:
       - ./.config:/app/.config
-    environment:
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: proj_db
 
-  host_database:
+  db:
     build:
       context: ./host_database
       dockerfile: Dockerfile
@@ -43,11 +39,7 @@ services:
     hostname: host_database
     container_name: db_assignment.host_database
     ports:
-      - "3310:3306"
+      - "3306:3306"
     volumes:
       - ./.config:/app/.config
       - ./host_database/data:/var/lib/mysql
-
-networks:
-  app-network:
-    driver: bridge

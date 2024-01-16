@@ -9,9 +9,9 @@ RUN python -m pip install -r /app/requirements.txt
 COPY . /app
 
 ENV MYSQL_DATABASE=proj_db
-ENV MYSQL_USER=admin
+ENV MYSQL_USER=root
 ENV MYSQL_PASSWORD=admin
 ENV DEVELOPMENT=prod
 
 ENV LISTEN_PORT 8501
-# EXPOSE 8501
+EXPOSE 8501

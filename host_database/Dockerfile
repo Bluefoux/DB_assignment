@@ -1,15 +1,25 @@
-FROM mysql:8.0.35
+FROM mysql:latest
 
-# Create directory for initialization scripts
-RUN mkdir -p /docker-entrypoint-initdb.d
+RUN chown -R mysql:root /var/lib/mysql/
 
-# Copy SQL script for creating tables
-COPY sql_data/tables.sql /docker-entrypoint-initdb.d/
 
-# Set permissions
-RUN chown -R mysql:root /docker-entrypoint-initdb.d
-RUN chmod -R 750 /docker-entrypoint-initdb.d
+MAINTAINER admin
 
-# Additional configurations if needed
+ARG MYSQL_USER
+ARG MYSQL_PASSWORD
+ARG MYSQL_ROOT_PASSWORD
 
-# EXPOSE 3306
+ENV MYSQL_DATABASE=proj_db
+ENV MYSQL_USER=root
+ENV MYSQL_PASSWORD=admin
+ENV MYSQL_ROOT_PASSWORD=admin
+
+ADD sql_data/tables.sql /etc/mysql/query_data/tables.sql
+#ADD sql_data/insert.sql /etc/mysql/query_data/insert.sql
+#ADD sql_data/procedures.sql /etc/mysql/query_data/procedures.sql
+
+RUN cp /etc/mysql/query_data/tables.sql /docker-entrypoint-initdb.d
+#RUN cp /etc/mysql/query_data/insert.sql /docker-entrypoint-initdb.d
+#RUN cp /etc/mysql/query_data/procedures.sql /docker-entrypoint-initdb.d
+
+EXPOSE 3306
